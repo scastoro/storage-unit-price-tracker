@@ -8,16 +8,21 @@ const FacilitySchema = new mongoose.Schema(
     },
     address: {
       type: {
-        street: String,
-        city: String,
-        postal_code: Number,
-        state: String,
-        country: String,
+        street: {
+          type: String,
+          required: [true, 'Facility street address is required.'],
+        },
+        city: { String, required: [true, 'Facility address is required.'] },
+        postal_code: {
+          Number,
+          required: [true, 'Facility address is required.'],
+        },
+        state: { String, required: [true, 'Facility address is required.'] },
+        country: { String, required: [true, 'Facility address is required.'] },
         area: String,
         lat: Number,
         long: Number,
       },
-      required: [true, 'Facility address is required.'],
     },
     phone: { type: Number },
     hours: {
@@ -28,6 +33,7 @@ const FacilitySchema = new mongoose.Schema(
         thursday: String,
         friday: String,
         saturday: String,
+        sunday: String,
       },
       required: [true, 'Facility hours are required.'],
     },
@@ -39,6 +45,7 @@ const FacilitySchema = new mongoose.Schema(
         thursday: String,
         friday: String,
         saturday: String,
+        sunday: String,
       },
       required: [true, 'Access hours are required.'],
     },
