@@ -1,12 +1,10 @@
-import puppeteer from 'puppeteer-core';
+import puppeteer from 'puppeteer';
 
-export const scrape = async () => {
+const scrape = async (facilityUrl: string, selectors: object) => {
   const browser = await puppeteer.launch();
   const page = await browser.newPage();
-  if (process.env.FACILITY_1_URL === undefined) {
-    throw new Error('Url undefined');
-  }
-  await page.goto(process.env.FACILITY_1_URL);
+  await page.goto(facilityUrl);
+
   let data = await page.evaluate(() => {
     let results: object[] = [];
     let items = document.querySelectorAll('.unit-item');
@@ -41,3 +39,5 @@ export const scrape = async () => {
   console.log(data);
   await browser.close();
 };
+
+export default scrape;

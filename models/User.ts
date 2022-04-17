@@ -13,6 +13,11 @@ const UserSchema = new mongoose.Schema(
     email: {
       type: String,
     },
+    role: {
+      type: String,
+      enum: ['user', 'admin', 'demo'],
+      required: true,
+    },
   },
   {
     timestamps: true,
