@@ -6,10 +6,9 @@ const scrape = async (facilityUrl: string, selectors: object) => {
   await page.goto(facilityUrl);
 
   let data = await page.evaluate(() => {
-    let results: object[] = [];
-    let items = document.querySelectorAll('.unit-item');
-    items.forEach((item) => {
-      results.push({
+    let items = Array.from(document.querySelectorAll('.unit-item'));
+    const results = items.map((item) => {
+      return {
         size: item
           .querySelector('.card-unit-size-title')
           ?.textContent?.match(/[+-]?([0-9]*[.])?[0-9]+/g),
@@ -30,7 +29,7 @@ const scrape = async (facilityUrl: string, selectors: object) => {
           .split(', '),
         promotion: item.querySelector('.card-text-promo')?.textContent?.trim(),
         unit_type: item.getAttribute('data-size'),
-      });
+      };
     });
 
     return results;
