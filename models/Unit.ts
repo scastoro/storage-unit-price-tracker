@@ -2,9 +2,9 @@ import mongoose from 'mongoose';
 
 const UnitSchema = new mongoose.Schema(
   {
-    size: {
-      type: String,
-      required: [true, 'Unit must have a size.'],
+    dimensions: {
+      type: [Number],
+      required: [true, 'Unit must have dimensions.'],
     },
     price: {
       type: Number,
@@ -17,10 +17,18 @@ const UnitSchema = new mongoose.Schema(
     promotion: {
       type: String,
     },
-    features: {
+    description: {
       type: [String],
     },
     type: {
+      type: String,
+      enum: ['self storage', 'parking'],
+    },
+    size: {
+      type: String,
+      enum: ['small', 'medium', 'large', 'extra large'],
+    },
+    amount_left: {
       type: String,
     },
     facility: {

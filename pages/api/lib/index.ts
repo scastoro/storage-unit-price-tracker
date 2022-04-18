@@ -5,18 +5,7 @@ import Unit from '../../../models/Unit';
 // Handle the passing of arguments and saving of resulting data into the database
 // Export functions to be used by the endpoints
 export const firstFacilityScrape = () => {
-  if (process.env.FACILITY_1_URL === undefined) {
-    throw new Error('Url undefined');
-  }
-  const selectors = {
-    item: '.unit-item',
-    size: '.card-unit-size-title',
-    start_price: 'del',
-    price: '.price-bold',
-    climate: '.card-text',
-    features: '.card-text',
-    promotion: '.card-promo',
-    unit_type: 'data-size',
-  };
+  const unit = new Unit({ name: 'test' });
+  unit.save();
   facilityOneScrape();
 };
