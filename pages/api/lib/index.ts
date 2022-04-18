@@ -1,4 +1,5 @@
-import scrape from './scraper';
+import facilityOneScrape from './facilityOneScrape';
+import Unit from '../../../models/Unit';
 
 // Define different facility scraping functions here
 // Handle the passing of arguments and saving of resulting data into the database
@@ -17,5 +18,5 @@ export const firstFacilityScrape = () => {
     promotion: '.card-promo',
     unit_type: 'data-size',
   };
-  scrape();
+  facilityOneScrape();
 };
