@@ -17,5 +17,5 @@ export const firstFacilityScrape = () => {
     promotion: '.card-promo',
     unit_type: 'data-size',
   };
-  scrape(process.env.FACILITY_1_URL, selectors);
+  scrape();
 };
