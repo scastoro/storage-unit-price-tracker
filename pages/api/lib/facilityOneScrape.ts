@@ -13,7 +13,7 @@ const facilityOneScrape = async () => {
     let items = Array.from(document.querySelectorAll('.unit-item'));
     const results = items.map((item) => {
       return {
-        size: item
+        dimensions: item
           .querySelector('.card-unit-size-title')
           ?.textContent?.match(/[+-]?([0-9]*[.])?[0-9]+/g),
         start_price: item
@@ -27,12 +27,19 @@ const facilityOneScrape = async () => {
           ?.firstChild?.textContent?.trim()
           .split(', ')
           .includes('Climate Controlled'),
-        features: item
+        description: item
           .querySelector('.card-text')
           ?.firstChild?.textContent?.trim()
           .split(', '),
         promotion: item.querySelector('.card-text-promo')?.textContent?.trim(),
-        unit_type: item.getAttribute('data-size'),
+        amount_left: item
+          .querySelector('.card-text-promo')
+          ?.textContent?.trim(),
+        size: item.getAttribute('data-size'),
+        type:
+          item.getAttribute('data-size') === 'parking'
+            ? 'parking'
+            : 'self-storage',
       };
     });
 
@@ -40,7 +47,6 @@ const facilityOneScrape = async () => {
   });
 
   console.log(data);
-  console.log('done');
   await browser.close();
   return data;
 };
