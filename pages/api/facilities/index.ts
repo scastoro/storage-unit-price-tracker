@@ -10,7 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   switch (method) {
     case 'GET':
       try {
-        const facilities = await Facility.find({}); /* find all the data in our database */
+        const facilities = await Facility.find({});
         res.status(200).json({ success: true, data: facilities });
       } catch (error) {
         res.status(400).json({ success: false });
@@ -18,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       break;
     case 'POST':
       try {
-        const facilities = await Facility.create(req.body); /* create a new model in the database */
+        const facilities = await Facility.create(req.body);
         res.status(201).json({ success: true, data: facilities });
       } catch (error) {
         res.status(400).json({ success: false });
