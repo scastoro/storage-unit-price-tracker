@@ -1,9 +1,27 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema, Types } from 'mongoose';
 
-const UnitSchema = new mongoose.Schema(
+interface Unit {
+  dimensions: {
+    length: number;
+    width: number;
+  };
+  price: number;
+  climate: boolean;
+  promotion?: string;
+  description?: string[];
+  type?: 'self storage' | 'parking';
+  size?: 'small' | 'medium' | 'large' | 'extra large';
+  amount_left?: string;
+  facility: Types.ObjectId;
+}
+
+const UnitSchema = new Schema<Unit>(
   {
     dimensions: {
-      type: [Number],
+      type: {
+        length: Number,
+        width: Number,
+      },
       required: [true, 'Unit must have dimensions.'],
     },
     price: {
@@ -39,5 +57,9 @@ const UnitSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+// UnitSchema.virtual('getUnitSize').get(function () {
+//   return `${this.dimensions.length}' x ${this.dimensions.width}'`;
+// });
 
 export default mongoose.models.Unit || mongoose.model('Unit', UnitSchema);
