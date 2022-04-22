@@ -32,6 +32,7 @@ async function dbConnect() {
     });
   }
   cached.conn = await cached.promise;
+  // console.dir(cached.conn.connection.getClient());
   return cached.conn;
 }
 

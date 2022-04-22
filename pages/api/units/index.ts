@@ -24,14 +24,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         res.status(400).json({ success: false });
       }
       break;
-    case 'POST':
-      try {
-        const unit = await Unit.create(req.body);
-        res.status(201).json({ success: true, data: unit });
-      } catch (error) {
-        res.status(400).json({ success: false });
-      }
-      break;
+    // case 'POST':
+    //   try {
+    //     const unit = await Unit.create(req.body);
+    //     res.status(201).json({ success: true, data: unit });
+    //   } catch (error) {
+    //     res.status(400).json({ success: false });
+    //   }
+    //   break;
     default:
       res.status(400).json({ success: false });
       break;
