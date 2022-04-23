@@ -11,5 +11,5 @@ This is a full stack application created to keep track of local storage unit fac
 - Next.js API Routes
 - TypeScript
 - Styled Components
-- Puppeteer
+- Redux
 - MongoDB

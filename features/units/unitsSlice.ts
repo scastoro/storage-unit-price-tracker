@@ -1,25 +1,29 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from 'app/store';
 
+interface Units {
+  name: string;
+}
+
 interface UnitsState {
-  value: object;
+  value: Units[];
 }
 
 const initialState: UnitsState = {
-  value: {},
+  value: [{ name: 'test' }],
 };
 
 export const unitsSlice = createSlice({
   name: 'units',
   initialState,
   reducers: {
-    set: (state, action: PayloadAction<object>) => {
+    updateUnits: (state, action: PayloadAction<Units[]>) => {
       state.value = action.payload;
     },
   },
 });
 
-export const { set } = unitsSlice.actions;
+export const { updateUnits } = unitsSlice.actions;
 
 export const selectUnits = (state: RootState) => state.units.value;
 
