@@ -9,9 +9,12 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     async function getUnits() {
-      const response = await fetch('http://localhost:3000/api/units?limit=5', {
-        mode: 'cors',
-      });
+      const response = await fetch(
+        'http://localhost:3000/api/units?limit=5&sort=-createdAt',
+        {
+          mode: 'cors',
+        }
+      );
       const units = await response.json();
       dispatch(updateUnits(units.data));
       console.log(units);
@@ -23,7 +26,7 @@ const Home: NextPage = () => {
     <>
       <h1>Storage Unit Price Tracking</h1>
       <p style={{ height: '100px' }}>
-        First unit name:{' '}
+        Unit sizes:{' '}
         {units.map(
           (item) => `${item.dimensions.width}x${item.dimensions.width} 
           `
