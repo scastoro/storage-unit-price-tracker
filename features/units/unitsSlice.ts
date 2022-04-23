@@ -1,23 +1,20 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import type { RootState } from 'app/store';
-
-interface Units {
-  name: string;
-}
+import { Unit } from 'types/types';
 
 interface UnitsState {
-  value: Units[];
+  value: Unit[];
 }
 
 const initialState: UnitsState = {
-  value: [{ name: 'test' }],
+  value: [],
 };
 
 export const unitsSlice = createSlice({
   name: 'units',
   initialState,
   reducers: {
-    updateUnits: (state, action: PayloadAction<Units[]>) => {
+    updateUnits: (state, action: PayloadAction<Unit[]>) => {
       state.value = action.payload;
     },
   },

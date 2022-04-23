@@ -1,19 +1,5 @@
 import mongoose, { Schema, Types } from 'mongoose';
-
-interface Unit {
-  dimensions: {
-    length: number;
-    width: number;
-  };
-  price: number;
-  climate: boolean;
-  promotion?: string;
-  description?: string[];
-  type?: 'self storage' | 'parking' | 'RV';
-  size?: 'small' | 'medium' | 'large' | 'extra large';
-  amount_left?: string;
-  facility: Types.ObjectId;
-}
+import { Unit } from 'types/types';
 
 const UnitSchema = new Schema<Unit>(
   {

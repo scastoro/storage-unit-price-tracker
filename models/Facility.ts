@@ -1,34 +1,5 @@
 import mongoose from 'mongoose';
-
-interface FacilityHours {
-  monday: string;
-  tuesday: string;
-  wednesday: string;
-  thursday: string;
-  friday: string;
-  saturday: string;
-  sunday: string;
-}
-
-interface Facility {
-  name: string;
-  address: {
-    street: string;
-    city: string;
-    postal_code: number;
-    state: string;
-    country: string;
-    area?: string;
-    lat?: number;
-    long?: number;
-  };
-  phone: string;
-  hours: FacilityHours;
-  access_hours: FacilityHours;
-  features?: string[];
-  website: string;
-  units_url?: string;
-}
+import { FacilityHours, Facility } from 'types/types';
 
 const FacilitySchema = new mongoose.Schema<Facility>(
   {
@@ -103,4 +74,5 @@ const FacilitySchema = new mongoose.Schema<Facility>(
   }
 );
 
-export default mongoose.models.Facility || mongoose.model('Facility', FacilitySchema);
+export default mongoose.models.Facility ||
+  mongoose.model('Facility', FacilitySchema);
