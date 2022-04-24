@@ -1,7 +1,11 @@
 import React from 'react';
 import Navbar from './Navbar';
 
-function Layout({ children }: { children: JSX.Element[] | JSX.Element }) {
+interface Props {
+  children: JSX.Element | JSX.Element[];
+}
+
+function Layout({ children }: Props) {
   return (
     <>
       <Navbar />
