@@ -13,7 +13,16 @@ import {
   Legend,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import { Unit } from 'types/types';
+import { format } from 'path/win32';
 
+interface FormattedUnits {
+  label: string;
+  data: {
+    x: string;
+    y: number;
+  }[];
+}
 const Facility: NextPage = () => {
   ChartJS.register(
     CategoryScale,
@@ -25,10 +34,43 @@ const Facility: NextPage = () => {
     Legend
   );
   const [loading, setLoading] = useState(false);
+  const [formattedUnits, setFormattedUnits] = useState<any[]>([]);
 
   const dispatch = useAppDispatch();
   const units = useAppSelector((state) => state.units.value);
-  console.log(units);
+
+  const formatUnits = () => {
+    console.log(units);
+    const formatted: any[] = units.reduce((acc: any, curr) => {
+      if (
+        !acc.find(
+          (item: any) =>
+            item.label === `${curr.dimensions.length}x${curr.dimensions.width}`
+        )
+      ) {
+        acc.push({
+          label: `${curr.dimensions.length}x${curr.dimensions.width}`,
+          data: [{ x: curr.createdAt, y: curr.price }],
+        });
+      } else {
+        acc
+          .find(
+            (item: any) =>
+              item.label ===
+              `${curr.dimensions.length}x${curr.dimensions.width}`
+          )
+          .data.push({
+            x: curr.createdAt,
+            y: curr.price,
+          });
+      }
+      return acc;
+    }, []);
+    setFormattedUnits(formatted);
+    console.log(formattedUnits);
+    setLoading(true);
+  };
+
   useEffect(() => {
     async function getUnits() {
       const response = await fetch(
@@ -39,8 +81,7 @@ const Facility: NextPage = () => {
       );
       const units = await response.json();
       dispatch(updateUnits(units.data));
-      console.log(units);
-      setLoading(true);
+      formatUnits();
     }
     getUnits();
   }, []);
@@ -52,17 +93,10 @@ const Facility: NextPage = () => {
         <Line
           options={{ responsive: true }}
           data={{
-            labels: ['test1', 'test2', 'test3', 'test4', 'test5'],
             datasets: [
               {
-                label: '5x5 Unit',
-                data: [
-                  units[0].price,
-                  units[4].price,
-                  units[5].price,
-                  units[7].price,
-                  units[11].price,
-                ],
+                label: formattedUnits[1].label,
+                data: formattedUnits[1].data,
               },
             ],
           }}

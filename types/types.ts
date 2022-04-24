@@ -13,6 +13,8 @@ export interface Unit {
   size?: 'small' | 'medium' | 'large' | 'extra large';
   amount_left?: string;
   facility: Types.ObjectId;
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export interface FacilityHours {
