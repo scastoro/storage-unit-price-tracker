@@ -11,10 +11,10 @@ import {
   Title,
   Tooltip,
   Legend,
+  LogarithmicScale,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { Unit } from 'types/types';
-import { format } from 'path/win32';
 
 interface FormattedUnits {
   label: string;
@@ -29,6 +29,7 @@ const Facility: NextPage = () => {
     LinearScale,
     PointElement,
     LineElement,
+    LogarithmicScale,
     Title,
     Tooltip,
     Legend
@@ -45,22 +46,30 @@ const Facility: NextPage = () => {
       if (
         !acc.find(
           (item: any) =>
-            item.label === `${curr.dimensions.length}x${curr.dimensions.width}`
+            item.label ===
+              `${curr.dimensions.length}x${curr.dimensions.width} ${
+                curr.climate ? 'climate' : 'non-climate'
+              }` && item.climate === curr.climate
         )
       ) {
         acc.push({
-          label: `${curr.dimensions.length}x${curr.dimensions.width}`,
-          data: [{ x: curr.createdAt, y: curr.price }],
+          label: `${curr.dimensions.length}x${curr.dimensions.width} ${
+            curr.climate ? 'climate' : 'non-climate'
+          }`,
+          data: [{ x: curr.createdAt?.split('T')[0], y: curr.price }],
+          climate: curr.climate,
         });
       } else {
         acc
           .find(
             (item: any) =>
               item.label ===
-              `${curr.dimensions.length}x${curr.dimensions.width}`
+                `${curr.dimensions.length}x${curr.dimensions.width} ${
+                  curr.climate ? 'climate' : 'non-climate'
+                }` && item.climate === curr.climate
           )
           .data.push({
-            x: curr.createdAt,
+            x: curr.createdAt?.split('T')[0],
             y: curr.price,
           });
       }
@@ -74,31 +83,38 @@ const Facility: NextPage = () => {
   useEffect(() => {
     async function getUnits() {
       const response = await fetch(
-        'http://localhost:3000/api/units?facility=625ebf06cffcf740f283a6dc',
+        'http://localhost:3000/api/units?facility=626010221a34c3c7d0b8b6d4',
         {
           mode: 'cors',
         }
       );
       const units = await response.json();
       dispatch(updateUnits(units.data));
-      formatUnits();
     }
     getUnits();
   }, []);
+  useEffect(() => {
+    if (units) {
+      formatUnits();
+    }
+  }, [units]);
 
   return (
     <>
       <h1>Facility Chart Test</h1>
       {loading && (
         <Line
-          options={{ responsive: true }}
-          data={{
-            datasets: [
-              {
-                label: formattedUnits[1].label,
-                data: formattedUnits[1].data,
+          options={{
+            responsive: true,
+            scales: {
+              y: {
+                type: 'logarithmic',
+                ticks: {},
               },
-            ],
+            },
+          }}
+          data={{
+            datasets: formattedUnits,
           }}
         />
       )}
