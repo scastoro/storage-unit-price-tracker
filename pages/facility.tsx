@@ -18,12 +18,9 @@ import {
 import { Line } from 'react-chartjs-2';
 import { colorScheme } from 'utils/colorScheme';
 
-// interface FormattedUnits extends ChartDataset<'line'> {
-//   label: string;
-//   borderColor: string | string[];
-//   climate: boolean;
-//   fill: boolean;
-// }
+interface UnitFormat extends ChartDataset<'line', { x: string | undefined; y: number }[]> {
+  climate: boolean;
+}
 const Facility: NextPage = () => {
   ChartJS.register(
     CategoryScale,
@@ -36,13 +33,13 @@ const Facility: NextPage = () => {
     Legend
   );
   const [loading, setLoading] = useState(false);
-  const [formattedUnits, setFormattedUnits] = useState<ChartDataset<'line'>[]>([]);
+  const [formattedUnits, setFormattedUnits] = useState<UnitFormat[]>([]);
 
   const dispatch = useAppDispatch();
   const units = useAppSelector((state) => state.units.value);
 
   const formatUnits = () => {
-    const formatted: ChartDataset<'line'>[] = units.reduce((acc: any, curr) => {
+    const formatted: UnitFormat[] = units.reduce((acc: UnitFormat[], curr) => {
       if (
         !acc.find(
           (item: any) =>
@@ -56,9 +53,14 @@ const Facility: NextPage = () => {
           label: `${curr.dimensions.length}x${curr.dimensions.width} ${
             curr.climate ? 'climate' : 'non-climate'
           }`,
-          data: [{ x: curr.createdAt?.split('T')[0], y: curr.price }],
+          data: [
+            {
+              x: curr.createdAt?.split('T')[0],
+              y: curr.price,
+            },
+          ],
           climate: curr.climate,
-          borderColor: colorScheme.splice(Math.floor(Math.random() * colorScheme.length - 1), 1),
+          borderColor: colorScheme.splice(Math.floor(Math.random() * colorScheme.length - 1), 1)[0],
           fill: false,
         });
       } else {
@@ -70,7 +72,7 @@ const Facility: NextPage = () => {
                   curr.climate ? 'climate' : 'non-climate'
                 }` && item.climate === curr.climate
           )
-          .data.push({
+          ?.data.push({
             x: curr.createdAt?.split('T')[0],
             y: curr.price,
           });
