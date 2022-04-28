@@ -13,7 +13,6 @@ import {
   Legend,
   LogarithmicScale,
   ChartDataset,
-  ChartData,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { colorScheme } from 'utils/colorScheme';
