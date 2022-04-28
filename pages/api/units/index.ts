@@ -3,10 +3,7 @@ import Unit from '../../../models/Unit';
 import { MongooseQueryParser } from 'mongoose-query-parser';
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method, query } = req;
   console.log(query);
 
@@ -41,7 +38,8 @@ export default async function handler(
         const unit = await buildQuery;
         res.status(200).json({ success: true, data: unit });
       } catch (error) {
-        res.status(400).json({ success: false });
+        console.log(error);
+        res.status(400).json({ success: false, error: error });
       }
       break;
     // case 'POST':
