@@ -8,14 +8,45 @@ interface Props {
 }
 
 function UnitTable({ units }: Props) {
-  const columns: Array<Column> = useMemo(() => COLUMNS, []);
+  const columns: Column[] = useMemo(() => COLUMNS, []);
   const data = useMemo(() => units, []);
 
-  useTable({
-    columns: columns,
-    data: data,
+  const tableInstance = useTable({
+    columns,
+    data,
   });
-  return <div>UnitTable</div>;
+
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableInstance;
+
+  return (
+    <table {...getTableProps()}>
+      <thead>
+        {headerGroups.map((headerGroup, index) => (
+          // eslint-disable-next-line react/jsx-key
+          <tr {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map((column) => (
+              // eslint-disable-next-line react/jsx-key
+              <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+            ))}
+          </tr>
+        ))}
+      </thead>
+      <tbody {...getTableBodyProps}>
+        {rows.map((row) => {
+          prepareRow(row);
+          return (
+            // eslint-disable-next-line react/jsx-key
+            <tr {...row.getRowProps()}>
+              {row.cells.map((cell) => {
+                // eslint-disable-next-line react/jsx-key
+                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+              })}
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  );
 }
 
 export default UnitTable;

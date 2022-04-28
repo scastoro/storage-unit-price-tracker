@@ -1,6 +1,6 @@
 import { ColumnWithLooseAccessor, Column } from 'react-table';
 
-export const COLUMNS: Array<Column> = [
+export const COLUMNS: Column[] = [
   {
     Header: 'Dimensions',
     accessor: 'dimensions',
@@ -24,9 +24,5 @@ export const COLUMNS: Array<Column> = [
   {
     Header: 'Size',
     accessor: 'size',
-  },
-  {
-    Header: 'Facility',
-    accessor: 'facility',
   },
 ];
