@@ -115,24 +115,26 @@ const Facility: NextPage = () => {
       <h1>Facility Chart Test</h1>
       <h2>{facilities.find((facility) => facility._id === id)?.name}</h2>
       {loading && (
-        <Line
-          options={{
-            responsive: true,
-            interaction: {
-              intersect: false,
-              mode: 'index',
-            },
-            scales: {
-              y: {
-                type: 'logarithmic',
-                ticks: {},
+        <section style={{ width: '50%' }} className='chart-container'>
+          <Line
+            options={{
+              responsive: true,
+              interaction: {
+                intersect: false,
+                mode: 'index',
               },
-            },
-          }}
-          data={{
-            datasets: formattedUnits,
-          }}
-        />
+              scales: {
+                y: {
+                  type: 'logarithmic',
+                  ticks: {},
+                },
+              },
+            }}
+            data={{
+              datasets: formattedUnits,
+            }}
+          />
+        </section>
       )}
     </>
   );
