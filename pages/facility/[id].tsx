@@ -64,10 +64,8 @@ const Facility: NextPage = () => {
             },
           ],
           climate: curr.climate,
-          borderColor: colorScheme.splice(
-            Math.floor(Math.random() * colorScheme.length - 1),
-            1
-          )[0],
+          borderColor:
+            colorScheme[Math.floor(Math.random() * colorScheme.length - 1)],
           fill: false,
         });
       } else {
