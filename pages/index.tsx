@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import { updateUnits, selectUnits } from 'features/units/unitsSlice';
+import { updateUnits } from 'features/units/unitsSlice';
 import UnitTable from 'components/Tables/UnitTable';
+import { updateFacilities } from 'features/facilities/facilitiesSlice';
 
 const Home: NextPage = () => {
   const units = useAppSelector((state) => state.units.value);
@@ -20,11 +21,22 @@ const Home: NextPage = () => {
       );
       const units = await response.json();
       dispatch(updateUnits(units.data));
-      console.log(units);
       setLoading(false);
     }
     getUnits();
-  }, []);
+  }, [dispatch]);
+
+  useEffect(() => {
+    async function getFacilities() {
+      const response = await fetch('http://localhost:3000/api/facilities', {
+        mode: 'cors',
+      });
+      const facilities = await response.json();
+      dispatch(updateFacilities(facilities.data));
+      console.log(facilities);
+    }
+    getFacilities();
+  }, [dispatch]);
 
   console.log(units);
 
