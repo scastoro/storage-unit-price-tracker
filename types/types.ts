@@ -45,4 +45,5 @@ export interface Facility {
   features?: string[];
   website: string;
   units_url?: string;
+  _id?: string;
 }

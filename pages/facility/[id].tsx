@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { useAppSelector, useAppDispatch } from 'app/hooks';
 import { updateUnits } from 'features/units/unitsSlice';
@@ -17,7 +18,8 @@ import {
 import { Line } from 'react-chartjs-2';
 import { colorScheme } from 'utils/colorScheme';
 
-interface UnitFormat extends ChartDataset<'line', { x: string | undefined; y: number }[]> {
+interface UnitFormat
+  extends ChartDataset<'line', { x: string | undefined; y: number }[]> {
   climate: boolean;
 }
 const Facility: NextPage = () => {
@@ -33,9 +35,12 @@ const Facility: NextPage = () => {
   );
   const [loading, setLoading] = useState(false);
   const [formattedUnits, setFormattedUnits] = useState<UnitFormat[]>([]);
+  const router = useRouter();
+  const { id } = router.query;
 
   const dispatch = useAppDispatch();
   const units = useAppSelector((state) => state.units.value);
+  const facilities = useAppSelector((state) => state.facilities.value);
 
   const formatUnits = () => {
     const formatted: UnitFormat[] = units.reduce((acc: UnitFormat[], curr) => {
@@ -59,7 +64,10 @@ const Facility: NextPage = () => {
             },
           ],
           climate: curr.climate,
-          borderColor: colorScheme.splice(Math.floor(Math.random() * colorScheme.length - 1), 1)[0],
+          borderColor: colorScheme.splice(
+            Math.floor(Math.random() * colorScheme.length - 1),
+            1
+          )[0],
           fill: false,
         });
       } else {
@@ -86,7 +94,7 @@ const Facility: NextPage = () => {
   useEffect(() => {
     async function getUnits() {
       const response = await fetch(
-        'http://localhost:3000/api/units?facility=626010221a34c3c7d0b8b6d4',
+        `http://localhost:3000/api/units?facility=${id}`,
         {
           mode: 'cors',
         }
@@ -95,7 +103,7 @@ const Facility: NextPage = () => {
       dispatch(updateUnits(units.data));
     }
     getUnits();
-  }, []);
+  }, [id]);
   useEffect(() => {
     if (units) {
       formatUnits();
@@ -105,6 +113,7 @@ const Facility: NextPage = () => {
   return (
     <>
       <h1>Facility Chart Test</h1>
+      <h2>{facilities.find((facility) => facility._id === id)?.name}</h2>
       {loading && (
         <Line
           options={{
