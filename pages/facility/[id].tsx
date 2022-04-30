@@ -13,14 +13,11 @@ import {
   Tooltip,
   Legend,
   LogarithmicScale,
-  ChartDataset,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { colorScheme } from 'utils/colorScheme';
+import { formatUnits } from 'utils/formatUnits';
+import { UnitFormat } from 'types/types';
 
-interface UnitFormat extends ChartDataset<'line', { x: string | undefined; y: number }[]> {
-  climate: boolean;
-}
 const Facility: NextPage = () => {
   ChartJS.register(
     CategoryScale,
@@ -41,53 +38,8 @@ const Facility: NextPage = () => {
   const units = useAppSelector((state) => state.units.value);
   const facilities = useAppSelector((state) => state.facilities.value);
 
-  const formatUnits = () => {
-    const formatted: UnitFormat[] = units.reduce((acc: UnitFormat[], curr) => {
-      if (
-        !acc.find(
-          (item: UnitFormat) =>
-            item.label ===
-              `${curr.dimensions.length}x${curr.dimensions.width} ${
-                curr.climate ? 'climate' : 'non-climate'
-              }` && item.climate === curr.climate
-        )
-      ) {
-        acc.push({
-          label: `${curr.dimensions.length}x${curr.dimensions.width} ${
-            curr.climate ? 'climate' : 'non-climate'
-          }`,
-          data: [
-            {
-              x: curr.createdAt?.split('T')?.[0],
-              y: curr.price,
-            },
-          ],
-          climate: curr.climate,
-          borderColor: colorScheme[Math.floor(Math.random() * colorScheme.length - 1)],
-          fill: false,
-        });
-      } else {
-        acc
-          .find(
-            (item: UnitFormat) =>
-              item.label ===
-                `${curr.dimensions.length}x${curr.dimensions.width} ${
-                  curr.climate ? 'climate' : 'non-climate'
-                }` && item.climate === curr.climate
-          )
-          ?.data.push({
-            x: curr.createdAt?.split('T')?.[0],
-            y: curr.price,
-          });
-      }
-      return acc;
-    }, []);
-    setFormattedUnits(formatted);
-    console.log(formattedUnits);
-    setLoading(true);
-  };
-
   useEffect(() => {
+    setLoading(true);
     async function getUnits() {
       const response = await fetch(`http://localhost:3000/api/units?facility=${id}`, {
         mode: 'cors',
@@ -97,9 +49,11 @@ const Facility: NextPage = () => {
     }
     getUnits();
   }, [id]);
+
   useEffect(() => {
     if (units) {
-      formatUnits();
+      setFormattedUnits(formatUnits(units));
+      setLoading(false);
     }
   }, [units]);
 
@@ -107,7 +61,7 @@ const Facility: NextPage = () => {
     <>
       <h1>Facility Chart Test</h1>
       <h2>{facilities.find((facility) => facility._id === id)?.name}</h2>
-      {loading && (
+      {!loading && (
         <section style={{ width: '50%' }} className='chart-container'>
           <Line
             options={{

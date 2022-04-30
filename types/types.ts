@@ -1,4 +1,5 @@
 import { Types } from 'mongoose';
+import { ChartDataset } from 'chart.js';
 
 export interface Unit {
   dimensions: {
@@ -15,6 +16,7 @@ export interface Unit {
   facility: Types.ObjectId;
   createdAt?: string;
   updatedAt?: string;
+  _id?: string;
 }
 
 export interface FacilityHours {
@@ -46,4 +48,8 @@ export interface Facility {
   website: string;
   units_url?: string;
   _id?: string;
+}
+
+export interface UnitFormat extends ChartDataset<'line', { x: string | undefined; y: number }[]> {
+  climate: boolean;
 }
