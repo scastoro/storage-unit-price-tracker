@@ -1,11 +1,24 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Link from 'next/link';
-import { useAppSelector } from 'app/hooks';
+import { updateFacilities } from 'features/facilities/facilitiesSlice';
+import { useAppDispatch, useAppSelector } from 'app/hooks';
 
-// Make dynamic navbar with links to facilities based on id
-// Look into next router
 function Navbar() {
   const facilities = useAppSelector((state) => state.facilities.value);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    // Get facilities on Navbar component mount
+    async function getFacilities() {
+      const response = await fetch('http://localhost:3000/api/facilities', {
+        mode: 'cors',
+      });
+      const facilities = await response.json();
+      dispatch(updateFacilities(facilities.data));
+      console.log(facilities);
+    }
+    getFacilities();
+  }, [dispatch]);
 
   return (
     <nav>
@@ -15,6 +28,7 @@ function Navbar() {
             <a>Home</a>
           </Link>
         </li>
+        {/* Dynamically generate navigation based on facilities */}
         {facilities.map((facility) => (
           <li key={facility._id}>
             <Link href={`/facility/${facility._id}`}>
