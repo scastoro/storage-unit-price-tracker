@@ -18,8 +18,7 @@ import {
 import { Line } from 'react-chartjs-2';
 import { colorScheme } from 'utils/colorScheme';
 
-interface UnitFormat
-  extends ChartDataset<'line', { x: string | undefined; y: number }[]> {
+interface UnitFormat extends ChartDataset<'line', { x: string | undefined; y: number }[]> {
   climate: boolean;
 }
 const Facility: NextPage = () => {
@@ -46,7 +45,7 @@ const Facility: NextPage = () => {
     const formatted: UnitFormat[] = units.reduce((acc: UnitFormat[], curr) => {
       if (
         !acc.find(
-          (item: any) =>
+          (item: UnitFormat) =>
             item.label ===
               `${curr.dimensions.length}x${curr.dimensions.width} ${
                 curr.climate ? 'climate' : 'non-climate'
@@ -59,26 +58,25 @@ const Facility: NextPage = () => {
           }`,
           data: [
             {
-              x: curr.createdAt?.split('T')[0],
+              x: curr.createdAt?.split('T')?.[0],
               y: curr.price,
             },
           ],
           climate: curr.climate,
-          borderColor:
-            colorScheme[Math.floor(Math.random() * colorScheme.length - 1)],
+          borderColor: colorScheme[Math.floor(Math.random() * colorScheme.length - 1)],
           fill: false,
         });
       } else {
         acc
           .find(
-            (item: any) =>
+            (item: UnitFormat) =>
               item.label ===
                 `${curr.dimensions.length}x${curr.dimensions.width} ${
                   curr.climate ? 'climate' : 'non-climate'
                 }` && item.climate === curr.climate
           )
           ?.data.push({
-            x: curr.createdAt?.split('T')[0],
+            x: curr.createdAt?.split('T')?.[0],
             y: curr.price,
           });
       }
@@ -91,12 +89,9 @@ const Facility: NextPage = () => {
 
   useEffect(() => {
     async function getUnits() {
-      const response = await fetch(
-        `http://localhost:3000/api/units?facility=${id}`,
-        {
-          mode: 'cors',
-        }
-      );
+      const response = await fetch(`http://localhost:3000/api/units?facility=${id}`, {
+        mode: 'cors',
+      });
       const units = await response.json();
       dispatch(updateUnits(units.data));
     }
