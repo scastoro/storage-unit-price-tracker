@@ -1,14 +1,14 @@
 import React, { useMemo } from 'react';
 import { Column, useTable } from 'react-table';
 import { Unit } from '../../types/types';
-import { COLUMNS } from './unitColumns';
 
 interface Props {
   units: Unit[];
+  tableColumns: Column[];
 }
 
-function UnitTable({ units }: Props) {
-  const columns: Column[] = useMemo(() => COLUMNS, []);
+function UnitTable({ units, tableColumns }: Props) {
+  const columns: Column[] = useMemo(() => tableColumns, []);
   const data = useMemo(() => units, []);
 
   const tableInstance = useTable({

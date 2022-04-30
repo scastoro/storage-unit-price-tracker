@@ -48,7 +48,7 @@ const Facility: NextPage = () => {
       dispatch(updateUnits(units.data));
     }
     getUnits();
-  }, [id]);
+  }, [id, dispatch]);
 
   useEffect(() => {
     if (units) {

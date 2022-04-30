@@ -3,6 +3,7 @@ import type { NextPage } from 'next';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { updateUnits } from 'features/units/unitsSlice';
 import UnitTable from 'components/Tables/UnitTable';
+import { COLUMNS } from 'components/Tables/unitColumns';
 
 const Home: NextPage = () => {
   const units = useAppSelector((state) => state.units.value);
@@ -37,7 +38,7 @@ const Home: NextPage = () => {
           `
         )}{' '}
       </p>
-      {!loading && <UnitTable units={units} />}
+      {!loading && <UnitTable units={units} tableColumns={COLUMNS} />}
     </>
   );
 };
