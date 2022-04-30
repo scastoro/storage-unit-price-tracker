@@ -53,3 +53,9 @@ export interface Facility {
 export interface UnitFormat extends ChartDataset<'line', { x: string | undefined; y: number }[]> {
   climate: boolean;
 }
+
+export interface TableUnit {
+  name: string;
+  climate: boolean;
+  [key: string]: number | string | boolean;
+}

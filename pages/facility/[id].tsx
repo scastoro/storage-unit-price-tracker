@@ -16,7 +16,8 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { formatUnits } from 'utils/formatUnits';
-import { UnitFormat } from 'types/types';
+import { formatUnitsTable } from 'utils/formatUnitsTable';
+import { TableUnit, UnitFormat } from 'types/types';
 
 const Facility: NextPage = () => {
   ChartJS.register(
@@ -31,6 +32,7 @@ const Facility: NextPage = () => {
   );
   const [loading, setLoading] = useState(false);
   const [formattedUnits, setFormattedUnits] = useState<UnitFormat[]>([]);
+  const [tableUnits, setTableUnits] = useState<TableUnit[]>([]);
   const router = useRouter();
   const { id } = router.query;
 
@@ -53,6 +55,7 @@ const Facility: NextPage = () => {
   useEffect(() => {
     if (units) {
       setFormattedUnits(formatUnits(units));
+      setTableUnits(formatUnitsTable(units));
       setLoading(false);
     }
   }, [units]);
