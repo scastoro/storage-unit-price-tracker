@@ -15,8 +15,8 @@ export const formatUnitsTable = (units: Unit[]) => {
         name: `${curr.dimensions.length}x${curr.dimensions.width} ${
           curr.climate ? 'climate' : 'non-climate'
         }`,
-        [curr.createdAt?.split('T')?.[0] ? curr.createdAt?.split('T')[0] : 'error']: curr.price,
         climate: curr.climate,
+        [curr.createdAt?.split('T')?.[0] ? curr.createdAt?.split('T')[0] : 'error']: curr.price,
       });
     } else {
       const row = acc?.find(

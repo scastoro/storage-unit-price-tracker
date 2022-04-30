@@ -18,6 +18,9 @@ import { Line } from 'react-chartjs-2';
 import { formatUnits } from 'utils/formatUnits';
 import { formatUnitsTable } from 'utils/formatUnitsTable';
 import { TableUnit, UnitFormat } from 'types/types';
+import UnitTable from 'components/Tables/UnitTable';
+import { getColumns } from 'components/Tables/getColumns';
+import { Column } from 'react-table';
 
 const Facility: NextPage = () => {
   ChartJS.register(
@@ -33,6 +36,7 @@ const Facility: NextPage = () => {
   const [loading, setLoading] = useState(false);
   const [formattedUnits, setFormattedUnits] = useState<UnitFormat[]>([]);
   const [tableUnits, setTableUnits] = useState<TableUnit[]>([]);
+  const [unitColumns, setUnitColumns] = useState<Column[]>([]);
   const router = useRouter();
   const { id } = router.query;
 
@@ -56,16 +60,23 @@ const Facility: NextPage = () => {
     if (units) {
       setFormattedUnits(formatUnits(units));
       setTableUnits(formatUnitsTable(units));
-      setLoading(false);
+      console.log(tableUnits);
     }
   }, [units]);
+
+  useEffect(() => {
+    if (tableUnits.length > 0) {
+      setUnitColumns(getColumns(tableUnits[0]));
+      setLoading(false);
+    }
+  }, [tableUnits]);
 
   return (
     <>
       <h1>Facility Chart Test</h1>
       <h2>{facilities.find((facility) => facility._id === id)?.name}</h2>
       {!loading && (
-        <section style={{ width: '50%' }} className='chart-container'>
+        <section style={{ width: '70%' }} className='chart-container'>
           <Line
             options={{
               responsive: true,
@@ -86,6 +97,9 @@ const Facility: NextPage = () => {
           />
         </section>
       )}
+      <section className='table-container'>
+        {!loading && <UnitTable units={tableUnits} tableColumns={unitColumns} />}
+      </section>
     </>
   );
 };

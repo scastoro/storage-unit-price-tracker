@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
 import { Column, useTable } from 'react-table';
-import { Unit } from '../../types/types';
+import { TableUnit, Unit } from '../../types/types';
 
 interface Props {
-  units: Unit[];
+  units: Unit[] | TableUnit[];
   tableColumns: Column[];
 }
 
