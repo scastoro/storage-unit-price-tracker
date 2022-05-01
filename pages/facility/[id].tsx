@@ -66,7 +66,7 @@ const Facility: NextPage = () => {
 
   useEffect(() => {
     if (tableUnits.length > 0) {
-      setUnitColumns(getColumns(tableUnits[0]));
+      setUnitColumns(getColumns(tableUnits));
       setLoading(false);
     }
   }, [tableUnits]);
@@ -76,14 +76,14 @@ const Facility: NextPage = () => {
       <h1>Facility Chart Test</h1>
       <h2>{facilities.find((facility) => facility._id === id)?.name}</h2>
       {!loading && (
-        <section style={{ width: '70%' }} className='chart-container'>
+        <section style={{ width: '65%', marginBottom: '30px' }} className='chart-container'>
           <Line
             options={{
               responsive: true,
-              interaction: {
-                intersect: false,
-                mode: 'index',
-              },
+              // interaction: {
+              //   intersect: false,
+              //   mode: 'index',
+              // },
               scales: {
                 y: {
                   type: 'logarithmic',
