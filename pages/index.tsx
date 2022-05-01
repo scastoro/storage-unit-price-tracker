@@ -26,8 +26,6 @@ const Home: NextPage = () => {
     getUnits();
   }, [dispatch]);
 
-  console.log(units);
-
   return (
     <>
       <h1>Storage Unit Price Tracking</h1>

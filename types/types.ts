@@ -55,7 +55,7 @@ export interface UnitFormat extends ChartDataset<'line', { x: string | undefined
 }
 
 export interface TableUnit {
-  name: string;
+  name?: string;
   climate?: boolean;
   [key: string]: number | string | boolean | undefined;
 }

@@ -21,6 +21,7 @@ import { TableUnit, UnitFormat } from 'types/types';
 import UnitTable from 'components/Tables/UnitTable';
 import { getColumns } from 'components/Tables/getColumns';
 import { Column } from 'react-table';
+import { formatUnitsDate } from 'utils/formatUnitsDate';
 
 const Facility: NextPage = () => {
   ChartJS.register(
@@ -60,6 +61,7 @@ const Facility: NextPage = () => {
     if (units) {
       setFormattedUnits(formatUnits(units));
       setTableUnits(formatUnitsTable(units));
+      formatUnitsDate(units);
       console.log(tableUnits);
     }
   }, [units]);
@@ -73,8 +75,7 @@ const Facility: NextPage = () => {
 
   return (
     <>
-      <h1>Facility Chart Test</h1>
-      <h2>{facilities.find((facility) => facility._id === id)?.name}</h2>
+      <h1>{facilities.find((facility) => facility._id === id)?.name}</h1>
       {!loading && (
         <section style={{ width: '65%', marginBottom: '30px' }} className='chart-container'>
           <Line

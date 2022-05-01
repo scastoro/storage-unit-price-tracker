@@ -33,7 +33,7 @@ export const formatUnitsTable = (units: Unit[]) => {
     }
     return acc;
   }, []);
-  console.log('Table Units');
-  console.dir(formatted);
+  // console.log('Table Units');
+  // console.dir(formatted);
   return formatted;
 };
