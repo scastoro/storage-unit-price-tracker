@@ -7,6 +7,7 @@ function Navbar() {
   const facilities = useAppSelector((state) => state.facilities.value);
   const dispatch = useAppDispatch();
 
+  // TODO: Explore using getServerSideProps instead of client side data fetching.
   useEffect(() => {
     // Get facilities on Navbar component mount
     async function getFacilities() {

@@ -4,9 +4,12 @@ import { useAppDispatch, useAppSelector } from 'app/hooks';
 import { updateUnits } from 'features/units/unitsSlice';
 import UnitTable from 'components/Tables/UnitTable';
 import { COLUMNS } from 'components/Tables/unitColumns';
+import FacilityInfo from 'components/FacilityInfo';
 
 const Home: NextPage = () => {
   const units = useAppSelector((state) => state.units.value);
+  const facilities = useAppSelector((state) => state.facilities.value);
+
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
 
@@ -37,6 +40,7 @@ const Home: NextPage = () => {
         )}{' '}
       </p>
       {!loading && <UnitTable units={units} tableColumns={COLUMNS} />}
+      <FacilityInfo facility={facilities[0]} />
     </>
   );
 };
