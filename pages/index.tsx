@@ -30,7 +30,7 @@ const Home: NextPage = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <section className='m-auto w-4/5'>
       <h1 className='underline'>Storage Unit Price Tracking</h1>
       <p style={{ height: '100px' }}>
         Unit sizes:{' '}
@@ -40,8 +40,8 @@ const Home: NextPage = () => {
         )}{' '}
       </p>
       {!loading && <UnitTable units={units} tableColumns={COLUMNS} />}
-      <FacilityInfo facility={facilities[0]} />
-    </>
+      {facilities.length > 0 && <FacilityInfo facility={facilities[0]} />}
+    </section>
   );
 };
 

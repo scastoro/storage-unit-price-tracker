@@ -22,16 +22,16 @@ function Navbar() {
   }, [dispatch]);
 
   return (
-    <nav>
-      <ul>
-        <li>
+    <nav className='m-auto my-5 w-4/5'>
+      <ul className='flex gap-4'>
+        <li className='underline hover:text-slate-500'>
           <Link href='/'>
             <a>Home</a>
           </Link>
         </li>
         {/* Dynamically generate navigation based on facilities */}
         {facilities.map((facility) => (
-          <li key={facility._id}>
+          <li className='underline hover:text-slate-500' key={facility._id}>
             <Link href={`/facility/${facility._id}`}>
               <a>{facility.name}</a>
             </Link>

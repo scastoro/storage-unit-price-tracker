@@ -1,3 +1,19 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+tr:nth-child(even) {
+  background-color: #ccc;
+}
+
+tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+th {
+  width: 75px;
+}
+
+th:nth-of-type(1) {
+  width: 6rem;
+}

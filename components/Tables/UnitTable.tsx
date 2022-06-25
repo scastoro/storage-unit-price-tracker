@@ -19,14 +19,16 @@ function UnitTable({ units, tableColumns }: Props) {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableInstance;
 
   return (
-    <table {...getTableProps()}>
+    <table className='border' {...getTableProps()}>
       <thead>
         {headerGroups.map((headerGroup, index) => (
           // eslint-disable-next-line react/jsx-key
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (
               // eslint-disable-next-line react/jsx-key
-              <th {...column.getHeaderProps()}>{column.render('Header')}</th>
+              <th className='border border-slate-600 text-sm' {...column.getHeaderProps()}>
+                {column.render('Header')}
+              </th>
             ))}
           </tr>
         ))}
@@ -36,10 +38,14 @@ function UnitTable({ units, tableColumns }: Props) {
           prepareRow(row);
           return (
             // eslint-disable-next-line react/jsx-key
-            <tr {...row.getRowProps()}>
+            <tr className='border' {...row.getRowProps()}>
               {row.cells.map((cell) => {
-                // eslint-disable-next-line react/jsx-key
-                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>;
+                return (
+                  // eslint-disable-next-line react/jsx-key
+                  <td className='border' {...cell.getCellProps()}>
+                    {cell.render('Cell')}
+                  </td>
+                );
               })}
             </tr>
           );

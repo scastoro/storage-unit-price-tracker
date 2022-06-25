@@ -74,9 +74,11 @@ const Facility: NextPage = () => {
   }, [tableUnits]);
 
   return (
-    <>
-      <h1 className=''>{facilities.find((facility) => facility._id === id)?.name}</h1>
-      <section className='table-container'>
+    <section className='m-auto w-4/5'>
+      <h1 className='text-3xl underline mb-5'>
+        {facilities.find((facility) => facility._id === id)?.name}
+      </h1>
+      <section className='table-container mb-10'>
         {!loading && <UnitTable units={tableUnits} tableColumns={unitColumns} />}
       </section>{' '}
       {!loading && (
@@ -101,7 +103,7 @@ const Facility: NextPage = () => {
           />
         </section>
       )}
-    </>
+    </section>
   );
 };
 
