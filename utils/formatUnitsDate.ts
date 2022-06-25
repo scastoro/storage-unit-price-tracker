@@ -6,8 +6,8 @@ import { Unit, TableUnit } from 'types/types';
   max amount of keys which translate to table headers.
   Also, data grows with rows rather than columns. 
  */
-export const formatUnitsDate = (units: Unit[]) => {
-  const formatted: TableUnit[] = units.reduce((acc: TableUnit[], curr) => {
+export const formatUnitsDate = (units: Unit[]): TableUnit[] => {
+  const formatted: TableUnit[] = units.reduce((acc: TableUnit[], curr: Unit) => {
     // Search accumulator for object with matching date property
     if (!acc.find((item: TableUnit) => item.date === curr.createdAt?.split('T')?.[0])) {
       // If not found, push new object into accumulator array with date property of current object

@@ -31,7 +31,7 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <h1>Storage Unit Price Tracking</h1>
+      <h1 className='underline'>Storage Unit Price Tracking</h1>
       <p style={{ height: '100px' }}>
         Unit sizes:{' '}
         {units.map(

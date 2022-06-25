@@ -60,7 +60,7 @@ const Facility: NextPage = () => {
   useEffect(() => {
     if (units) {
       setFormattedUnits(formatUnits(units));
-      setTableUnits(formatUnitsTable(units));
+      setTableUnits(formatUnitsDate(units));
       formatUnitsDate(units);
       console.log(tableUnits);
     }
@@ -75,7 +75,10 @@ const Facility: NextPage = () => {
 
   return (
     <>
-      <h1>{facilities.find((facility) => facility._id === id)?.name}</h1>
+      <h1 className=''>{facilities.find((facility) => facility._id === id)?.name}</h1>
+      <section className='table-container'>
+        {!loading && <UnitTable units={tableUnits} tableColumns={unitColumns} />}
+      </section>{' '}
       {!loading && (
         <section style={{ width: '65%', marginBottom: '30px' }} className='chart-container'>
           <Line
@@ -98,9 +101,6 @@ const Facility: NextPage = () => {
           />
         </section>
       )}
-      <section className='table-container'>
-        {!loading && <UnitTable units={tableUnits} tableColumns={unitColumns} />}
-      </section>
     </>
   );
 };
