@@ -4,11 +4,6 @@ import { Unit, TableUnit } from 'types/types';
 export const formatUnitsTable = (units: Unit[]) => {
   // Generate array of objects that contain the unit size and price that corresponds to a date
   const formatted: TableUnit[] = units.reduce((acc: TableUnit[], curr) => {
-    const unitName = `${curr.dimensions.length}x${curr.dimensions.width} ${
-      curr.climate ? 'climate' : 'non-climate'
-    }`.replace('.', '-');
-
-    console.log(unitName);
     if (
       // Determine if object exists based on name property
       !acc.find(
@@ -16,16 +11,17 @@ export const formatUnitsTable = (units: Unit[]) => {
           item.name ===
           `${curr.dimensions.length}x${curr.dimensions.width} ${
             curr.climate ? 'climate' : 'non-climate'
-          }`.replace('.', '-')
+          }`
       )
     ) {
       // If not, push new object into array
       acc.push({
         name: `${curr.dimensions.length}x${curr.dimensions.width} ${
           curr.climate ? 'climate' : 'non-climate'
-        }`.replace('.', '-'),
-        [curr.createdAt?.split('T')?.[0] ? curr.createdAt?.split('T')[0] : 'error']:
-          `$${curr.price}`.replace('.', '-'),
+        }`,
+        [curr.createdAt?.split('T')?.[0]
+          ? curr.createdAt?.split('T')[0]
+          : 'error']: `$${curr.price}`,
       });
       // Else add new property to existing object.
     } else {
@@ -34,10 +30,10 @@ export const formatUnitsTable = (units: Unit[]) => {
           item.name ===
           `${curr.dimensions.length}x${curr.dimensions.width} ${
             curr.climate ? 'climate' : 'non-climate'
-          }`.replace('.', '-')
+          }`
       );
       if (row !== undefined && curr.createdAt?.split('T')?.[0] !== undefined) {
-        row[curr.createdAt?.split('T')?.[0]] = `$${curr.price}`.replace('.', '-');
+        row[curr.createdAt?.split('T')?.[0]] = `$${curr.price}`;
       }
     }
     return acc;

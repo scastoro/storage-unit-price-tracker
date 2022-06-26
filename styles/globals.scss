@@ -1,0 +1,28 @@
+tr:nth-child(even) {
+  background-color: #ccc;
+}
+
+tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+th {
+  width: 75px;
+}
+
+th:nth-of-type(1) {
+  width: 6rem;
+  text-transform: capitalize;
+}
+
+tbody {
+  height: 270px;
+}
+
+// button:disabled {
+//   opacity: 0.5;
+
+//   &:hover {
+//     background-color: inherit;
+//   }
+// }
