@@ -54,21 +54,23 @@ const Facility: NextPage = () => {
       const units = await response.json();
       dispatch(updateUnits(units.data));
     }
-    getUnits();
+    if (id) {
+      getUnits();
+    }
   }, [id, dispatch]);
 
   useEffect(() => {
     if (units) {
       setFormattedUnits(formatUnits(units));
       setTableUnits(formatUnitsDate(units));
-      formatUnitsDate(units);
-      console.log(tableUnits);
     }
   }, [units]);
 
   useEffect(() => {
+    console.log(tableUnits);
     if (tableUnits.length > 0) {
       setUnitColumns(getColumns(tableUnits));
+      console.log(unitColumns);
       setLoading(false);
     }
   }, [tableUnits]);

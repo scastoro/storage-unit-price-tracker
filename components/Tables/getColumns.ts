@@ -5,12 +5,16 @@ export function getColumns(units: TableUnit[]): Column[] {
   return units.reduce((acc: Column[], curr) => {
     // Use reduce to loop through every object in units parameter array
     Object.keys(curr).forEach((key) => {
+      // Remove the hyphen from header, only needed in accessor b/c react table cannot handle periods in accessor
+      const columnHeader = key.match(/(\d)-(\d)/) ? key.replace(/-/, '.') : key;
       // Check if object has been created in accumulator based off of the current key
-      if (!acc.find((item) => item.Header === key && item.accessor === key)) {
+      if (!acc.find((item) => item.Header === columnHeader && item.accessor === key)) {
         // If not, add it to accumulator array
         acc.push({
-          Header: key,
+          Header: columnHeader,
           accessor: key,
+          // Not sure what I want to display if no value in current cell
+          // Cell: ({ value }) => (value ? value : 'N/A'),
         });
       }
       // Else, continue to next iteration
