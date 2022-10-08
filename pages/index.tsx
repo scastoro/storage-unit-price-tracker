@@ -5,6 +5,8 @@ import { updateUnits } from 'features/units/unitsSlice';
 import UnitTable from 'components/Tables/UnitTable';
 import { COLUMNS } from 'components/Tables/unitColumns';
 import FacilityInfo from 'components/FacilityInfo';
+import { useSession } from 'next-auth/react';
+import AccessDenied from 'components/auth/access-denied';
 
 const Home: NextPage = () => {
   const units = useAppSelector((state) => state.units.value);
@@ -12,6 +14,7 @@ const Home: NextPage = () => {
 
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     async function getUnits() {
@@ -28,6 +31,12 @@ const Home: NextPage = () => {
     }
     getUnits();
   }, [dispatch]);
+
+  if (!session){
+    return (
+      <AccessDenied />
+    )
+  }
 
   return (
     <section className='m-auto w-4/5'>

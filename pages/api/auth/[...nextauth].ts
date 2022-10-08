@@ -8,7 +8,7 @@ export default NextAuth({
     CredentialsProvider({
       name: 'Username and Password',
       credentials: {
-        username: { label: 'Username', type: 'text', placeholder: 'jsmith' },
+        username: { label: 'Username', type: 'text', placeholder: 'example@example.com' },
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials, req) {
@@ -16,12 +16,13 @@ export default NextAuth({
         if (credentials === undefined) {
           throw Error('Invalid Credentials.');
         }
-        const user = await User.findOne({ username: credentials.username });
-        const result = await bcrypt.compare(credentials.password, user.password);
+        console.log(credentials);
+        const authUser = await User.findOne({ username: credentials.username });
+        const result = await bcrypt.compare(credentials.password, authUser.password);
 
         if (result) {
           // Any object returned will be saved in `user` property of the JWT
-          return user;
+          return authUser;
         } else {
           // If you return null then an error will be displayed advising the user to check their details.
           return null;
@@ -31,4 +32,7 @@ export default NextAuth({
       },
     }),
   ],
+  jwt: {
+    maxAge: 60 * 60 * 24 * 30,
+  }
 });

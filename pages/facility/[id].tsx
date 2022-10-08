@@ -67,10 +67,8 @@ const Facility: NextPage = () => {
   }, [units]);
 
   useEffect(() => {
-    console.log(tableUnits);
     if (tableUnits.length > 0) {
       setUnitColumns(getColumns(tableUnits));
-      console.log(unitColumns);
       setLoading(false);
     }
   }, [tableUnits]);

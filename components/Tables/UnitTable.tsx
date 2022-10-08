@@ -8,8 +8,8 @@ interface Props {
 }
 
 function UnitTable({ units, tableColumns }: Props) {
-  const columns: Column[] = useMemo(() => tableColumns, []);
-  const data = useMemo(() => units, []);
+  const columns: Column[] = useMemo(() => tableColumns, [tableColumns]);
+  const data = useMemo(() => units, [units]);
 
   const tableInstance = useTable(
     {
@@ -73,7 +73,8 @@ function UnitTable({ units, tableColumns }: Props) {
               </tr>
             );
           })}
-          {page.length < pageSize && (
+          {/* Generate row w/ extra space if number of rows is less than pageSize */}
+          {page.length < pageSize && pageIndex > 1 && (
             <tr style={{ height: `${(pageSize - page.length) * 27}px` }}></tr>
           )}
         </tbody>
@@ -89,7 +90,7 @@ function UnitTable({ units, tableColumns }: Props) {
           | Go to page:{' '}
           <input
             type='number'
-            className='w-7 border'
+            className='w-7 border-2 border-slate-500 rounded'
             defaultValue={pageIndex + 1}
             onChange={(e) => {
               const pageNumber = e.target.value ? Number(e.target.value) - 1 : 0;
