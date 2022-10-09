@@ -6,7 +6,6 @@ import UnitTable from 'components/Tables/UnitTable';
 import { COLUMNS } from 'components/Tables/unitColumns';
 import FacilityInfo from 'components/FacilityInfo';
 import { useSession } from 'next-auth/react';
-import AccessDenied from 'components/auth/access-denied';
 
 const Home: NextPage = () => {
   const units = useAppSelector((state) => state.units.value);
@@ -19,8 +18,9 @@ const Home: NextPage = () => {
   useEffect(() => {
     async function getUnits() {
       setLoading(true);
+      const url = process.env.VERCEL_URL || 'localhost:3000';
       const response = await fetch(
-        'http://localhost:3000/api/units?limit=5&sort=-createdAt&populate=facility._id:name',
+        `http://${url}/api/units?limit=5&sort=-createdAt&populate=facility._id:name`,
         {
           mode: 'cors',
         }
