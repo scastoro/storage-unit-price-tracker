@@ -6,7 +6,7 @@ export default function LoginButton() {
     console.log(`Session info: ${JSON.stringify(session)}`);
     return (
       <>
-      Signed in as {session.user?.name}<br />
+      Signed in as {session.user?.email}<br />
       <button onClick={() => signOut()}>Sign Out</button>
       </>
     )

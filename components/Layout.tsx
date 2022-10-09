@@ -15,6 +15,7 @@ function Layout({ children }: Props) {
       <AccessDenied />
     )
   }
+
   return (
     <>
       <Navbar />

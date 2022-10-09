@@ -18,21 +18,22 @@ export default NextAuth({
         }
         console.log(credentials);
         const authUser = await User.findOne({ username: credentials.username });
+        console.log(authUser);
         const result = await bcrypt.compare(credentials.password, authUser.password);
 
+        // Need to format user object
+        const user = {
+          email: authUser.username
+        }
         if (result) {
-          // Any object returned will be saved in `user` property of the JWT
-          return authUser;
+          return user;
         } else {
-          // If you return null then an error will be displayed advising the user to check their details.
           return null;
-
-          // You can also Reject this callback with an Error thus the user will be sent to the error page with the error message as a query parameter
         }
       },
     }),
   ],
   jwt: {
     maxAge: 60 * 60 * 24 * 30,
-  }
+  },
 });

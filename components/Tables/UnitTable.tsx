@@ -15,6 +15,9 @@ function UnitTable({ units, tableColumns }: Props) {
     {
       columns,
       data,
+      initialState: {
+        pageSize: 25
+      }
     },
     usePagination
   );
@@ -36,6 +39,7 @@ function UnitTable({ units, tableColumns }: Props) {
     gotoPage,
     pageCount,
     setPageSize,
+    exportData,
   } = tableInstance;
 
   const { pageIndex, pageSize } = state;
@@ -72,6 +76,7 @@ function UnitTable({ units, tableColumns }: Props) {
                 })}
               </tr>
             );
+
           })}
           {/* Generate row w/ extra space if number of rows is less than pageSize */}
           {page.length < pageSize && pageIndex > 1 && (
