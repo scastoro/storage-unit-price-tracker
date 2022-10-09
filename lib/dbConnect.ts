@@ -29,7 +29,7 @@ async function dbConnect() {
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongoose) => {
       return mongoose;
-    });
+    }).catch(err => console.error(err));
   }
   cached.conn = await cached.promise;
   // console.dir(cached.conn.connection.getClient());

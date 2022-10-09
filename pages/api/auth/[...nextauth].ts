@@ -2,6 +2,7 @@ import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import User from 'models/User';
 import bcrypt from 'bcrypt';
+import dbConnect from 'lib/dbConnect';
 
 export default NextAuth({
   providers: [
@@ -16,8 +17,9 @@ export default NextAuth({
         if (credentials === undefined) {
           throw Error('Invalid Credentials.');
         }
-        console.log(credentials);
-        const authUser = await User.findOne({ username: credentials.username });
+        await dbConnect().catch(err => console.error(err));
+        console.log(`creds submitted ${JSON.stringify(credentials)}`);
+        const authUser = await User.findOne({ username: credentials.username }).catch(err => console.error(err));
         console.log(authUser);
         const result = await bcrypt.compare(credentials.password, authUser.password);
 
@@ -37,7 +39,7 @@ export default NextAuth({
     maxAge: 60 * 60 * 24 * 30,
   },
   secret: process.env.NEXTAUTH_SECRET,
-  pages: {
-    signIn: '/auth/credentials-signin'
-  }
+  // pages: {
+    // signIn: '/auth/credentials-signin'
+  // }
 });

@@ -5,11 +5,17 @@ import { Provider } from 'react-redux';
 import { store } from 'app/store';
 import Layout from 'components/Layout';
 import { SessionProvider } from "next-auth/react"
+import { Session } from 'next-auth';
 
-function MyApp({ Component, pageProps: {session, ...pageProps} }: AppProps) {
+function MyApp({
+  Component,
+  pageProps
+}: AppProps<{
+  session: Session;
+}>) {
   return (
     <Provider store={store}>
-      <SessionProvider session={session}>
+      <SessionProvider session={pageProps.session}>
         <Layout>
           <Component {...pageProps} />
         </Layout>
