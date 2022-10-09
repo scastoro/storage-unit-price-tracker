@@ -37,4 +37,7 @@ export default NextAuth({
     maxAge: 60 * 60 * 24 * 30,
   },
   secret: process.env.NEXTAUTH_SECRET,
+  pages: {
+    signIn: '/auth/credentials-signin'
+  }
 });

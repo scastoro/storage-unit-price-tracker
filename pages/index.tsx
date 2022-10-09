@@ -32,12 +32,6 @@ const Home: NextPage = () => {
     getUnits();
   }, [dispatch]);
 
-  if (!session){
-    return (
-      <AccessDenied />
-    )
-  }
-
   return (
     <section className='m-auto w-4/5'>
       <h1 className='underline'>Storage Unit Price Tracking</h1>
