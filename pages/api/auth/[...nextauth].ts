@@ -2,6 +2,7 @@ import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import User from 'models/User';
 import bcrypt from 'bcryptjs';
+import dbConnect from 'lib/dbConnect';
 
 export default NextAuth({
   providers: [
@@ -16,7 +17,7 @@ export default NextAuth({
         if (credentials === undefined) {
           throw Error('Invalid Credentials.');
         }
-        // await dbConnect().catch(err => console.error(err));
+        await dbConnect().catch(err => console.error(err));
         console.log(`creds submitted ${JSON.stringify(credentials)}`);
         const authUser = await User.findOne({ username: credentials.username }).catch(err => console.error(err));
         console.log(authUser);
