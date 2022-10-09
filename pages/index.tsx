@@ -18,7 +18,7 @@ const Home: NextPage = () => {
   useEffect(() => {
     async function getUnits() {
       setLoading(true);
-      const url = process.env.VERCEL_URL || 'localhost:3000';
+      const url = process.env.NEXT_PUBLIC_VERCEL_URL || 'localhost:3000';
       const response = await fetch(
         `http://${url}/api/units?limit=5&sort=-createdAt&populate=facility._id:name`,
         {

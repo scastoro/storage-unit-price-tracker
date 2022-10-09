@@ -12,7 +12,7 @@ function Navbar() {
   useEffect(() => {
     // Get facilities on Navbar component mount
     async function getFacilities() {
-      const url = process.env.VERCEL_URL || 'localhost:3000';
+      const url = process.env.NEXT_PUBLIC_VERCEL_URL || 'localhost:3000';
       const response = await fetch(`http://${url}/api/facilities`, {
         mode: 'cors',
       });
