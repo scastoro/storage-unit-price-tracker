@@ -49,7 +49,7 @@ const Facility: NextPage = () => {
     setLoading(true);
     async function getUnits() {
       const url = process.env.NEXT_PUBLIC_VERCEL_URL || 'localhost:3000';
-      const response = await fetch(`http://${url}/api/units?facility=${id}`, {
+      const response = await fetch(`https://${url}/api/units?facility=${id}`, {
         mode: 'cors',
       });
       const units = await response.json();

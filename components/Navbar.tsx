@@ -13,7 +13,7 @@ function Navbar() {
     // Get facilities on Navbar component mount
     async function getFacilities() {
       const url = process.env.NEXT_PUBLIC_VERCEL_URL || 'localhost:3000';
-      const response = await fetch(`http://${url}/api/facilities`, {
+      const response = await fetch(`https://${url}/api/facilities`, {
         mode: 'cors',
       });
       const facilities = await response.json();

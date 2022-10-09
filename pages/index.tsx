@@ -20,7 +20,7 @@ const Home: NextPage = () => {
       setLoading(true);
       const url = process.env.NEXT_PUBLIC_VERCEL_URL || 'localhost:3000';
       const response = await fetch(
-        `http://${url}/api/units?limit=5&sort=-createdAt&populate=facility._id:name`,
+        `https://${url}/api/units?limit=5&sort=-createdAt&populate=facility._id:name`,
         {
           mode: 'cors',
         }
