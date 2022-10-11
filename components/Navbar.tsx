@@ -10,14 +10,8 @@ function Navbar() {
 
   // TODO: Explore using getServerSideProps instead of client side data fetching.
   useEffect(() => {
-    // Get facilities on Navbar component mount
     async function getFacilities() {
-      let url = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/facilities`;
-      if (process.env.NODE_ENV === "development")
-      {
-        url = url.replace('https', 'http');
-      }
-      const response = await fetch(url, {
+      const response = await fetch(`/api/facilities`, {
         mode: 'cors',
       });
       const facilities = await response.json();
@@ -36,7 +30,7 @@ function Navbar() {
           </Link>
         </li>
         {/* Dynamically generate navigation based on facilities */}
-        {facilities.map((facility) => (
+        {facilities?.map((facility) => (
           <li className='underline hover:text-slate-500' key={facility._id}>
             <Link href={`/facility/${facility._id}`}>
               <a>{facility.name}</a>

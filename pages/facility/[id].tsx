@@ -48,12 +48,7 @@ const Facility: NextPage = () => {
   useEffect(() => {
     setLoading(true);
     async function getUnits() {
-      let url = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/units?facility=${id}`;
-      if (process.env.NODE_ENV === "development")
-      {
-        url = url.replace('https', 'http');
-      }
-      const response = await fetch(url, {
+      const response = await fetch(`/api/units?facility=${id}`, {
         mode: 'cors',
       });
       const units = await response.json();

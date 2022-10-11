@@ -5,7 +5,6 @@ import { updateUnits } from 'features/units/unitsSlice';
 import UnitTable from 'components/Tables/UnitTable';
 import { COLUMNS } from 'components/Tables/unitColumns';
 import FacilityInfo from 'components/FacilityInfo';
-import { useSession } from 'next-auth/react';
 
 const Home: NextPage = () => {
   const units = useAppSelector((state) => state.units.value);
@@ -13,17 +12,11 @@ const Home: NextPage = () => {
 
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
-  const { data: session, status } = useSession();
 
   useEffect(() => {
     async function getUnits() {
       setLoading(true);
-      let url = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/units?limit=5&sort=-createdAt&populate=facility._id:name`;
-      if (process.env.NODE_ENV === "development")
-      {
-        url = `http://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/units?limit=5&sort=-createdAt&populate=facility._id:name`
-      }
-      const response = await fetch(url, {
+      const response = await fetch(`/api/units?limit=5&sort=-createdAt&populate=facility._id:name`, {
         mode: 'cors',
       });
       const units = await response.json();
@@ -38,7 +31,7 @@ const Home: NextPage = () => {
       <h1 className='underline'>Storage Unit Price Tracking</h1>
       <p style={{ height: '100px' }}>
         Unit sizes:{' '}
-        {units.map(
+        {units?.map(
           (item) => `${item.dimensions.width}x${item.dimensions.width} 
           `
         )}{' '}
