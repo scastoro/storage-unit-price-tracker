@@ -48,8 +48,12 @@ const Facility: NextPage = () => {
   useEffect(() => {
     setLoading(true);
     async function getUnits() {
-      const url = process.env.NEXT_PUBLIC_VERCEL_URL || 'localhost:3000';
-      const response = await fetch(`https://${url}/api/units?facility=${id}`, {
+      let url = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/units?facility=${id}`;
+      if (process.env.NODE_ENV === "development")
+      {
+        url = url.replace('https', 'http');
+      }
+      const response = await fetch(url, {
         mode: 'cors',
       });
       const units = await response.json();
@@ -87,10 +91,6 @@ const Facility: NextPage = () => {
           <Line
             options={{
               responsive: true,
-              // interaction: {
-              //   intersect: false,
-              //   mode: 'index',
-              // },
               scales: {
                 y: {
                   type: 'logarithmic',

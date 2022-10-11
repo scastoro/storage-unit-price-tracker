@@ -18,13 +18,14 @@ const Home: NextPage = () => {
   useEffect(() => {
     async function getUnits() {
       setLoading(true);
-      const url = process.env.NEXT_PUBLIC_VERCEL_URL || 'localhost:3000';
-      const response = await fetch(
-        `https://${url}/api/units?limit=5&sort=-createdAt&populate=facility._id:name`,
-        {
-          mode: 'cors',
-        }
-      );
+      let url = `https://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/units?limit=5&sort=-createdAt&populate=facility._id:name`;
+      if (process.env.NODE_ENV === "development")
+      {
+        url = `http://${process.env.NEXT_PUBLIC_VERCEL_URL}/api/units?limit=5&sort=-createdAt&populate=facility._id:name`
+      }
+      const response = await fetch(url, {
+        mode: 'cors',
+      });
       const units = await response.json();
       dispatch(updateUnits(units.data));
       setLoading(false);
