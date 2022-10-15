@@ -16,7 +16,6 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { formatUnits } from 'utils/formatUnits';
-import { formatUnitsTable } from 'utils/formatUnitsTable';
 import { TableUnit, UnitFormat } from 'types/types';
 import UnitTable from 'components/Tables/UnitTable';
 import { getColumns } from 'components/Tables/getColumns';
@@ -24,6 +23,7 @@ import { Column } from 'react-table';
 import { formatUnitsDate } from 'utils/formatUnitsDate';
 import { sub, format } from 'date-fns';
 import DatePicker from 'react-datepicker';
+import Toggle from 'components/utils/Toggle';
 
 const Facility: NextPage = () => {
   ChartJS.register(
@@ -38,6 +38,7 @@ const Facility: NextPage = () => {
   );
   const [loading, setLoading] = useState(false);
   const [date, setDate] = useState(format(sub(new Date(), { months: 4 }), 'yyyy-MM-dd'));
+  const [display, setDisplay] = useState("Table")
   const [formattedUnits, setFormattedUnits] = useState<UnitFormat[]>([]);
   const [tableUnits, setTableUnits] = useState<TableUnit[]>([]);
   const [unitColumns, setUnitColumns] = useState<Column[]>([]);
@@ -80,20 +81,23 @@ const Facility: NextPage = () => {
   return (
     <>
       <section className='m-auto w-4/5'>
-        <section className='datepicker-container'>
-          <h2>Choose start date:</h2>
-          <DatePicker
-            selected={new Date(date)}
-            onChange={(date: Date) => setDate(format(date, 'yyyy-MM-dd'))}
-          />
-        </section>
         <h1 className='text-3xl underline mb-5'>
           {facilities.find((facility) => facility._id === id)?.name}
         </h1>
+        <section className='datepicker-container'>
+          <div>
+            <h2>Choose start date:</h2>
+            <DatePicker
+              selected={new Date(date)}
+              onChange={(date: Date) => setDate(format(date, 'yyyy-MM-dd'))}
+            />
+          </div>
+          <Toggle optionSelected={(e) => setDisplay(e.target.value)}/>
+        </section>
         <section className='table-container mb-10'>
-          {!loading && <UnitTable units={tableUnits} tableColumns={unitColumns} />}
+          {!loading && display === "Table" ? <UnitTable units={tableUnits} tableColumns={unitColumns} /> : null}
         </section>{' '}
-        {!loading && (
+        {!loading && display === "Chart" ? (
           <section style={{ width: '65%', marginBottom: '30px' }} className='chart-container'>
             <Line
               options={{
@@ -110,7 +114,7 @@ const Facility: NextPage = () => {
               }}
             />
           </section>
-        )}
+        ): null}
       </section>
     </>
   );
