@@ -79,11 +79,14 @@ const Facility: NextPage = () => {
 
   return (
     <>
-      <DatePicker
-        selected={new Date(date)}
-        onChange={(date: Date) => setDate(format(date, 'yyyy-MM-dd'))}
-      />
       <section className='m-auto w-4/5'>
+        <section className='datepicker-container'>
+          <h2>Choose start date:</h2>
+          <DatePicker
+            selected={new Date(date)}
+            onChange={(date: Date) => setDate(format(date, 'yyyy-MM-dd'))}
+          />
+        </section>
         <h1 className='text-3xl underline mb-5'>
           {facilities.find((facility) => facility._id === id)?.name}
         </h1>

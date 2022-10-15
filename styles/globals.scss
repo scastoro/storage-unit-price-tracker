@@ -24,9 +24,17 @@ tbody {
   height: 270px;
 }
 
-.react-datepicker-wrapper {
-  margin-left: 10%;
-  border: 1px solid black;
-  width: auto;
-  border-radius: 5px;
+a {
+  text-decoration: underline;
+}
+
+.datepicker-container {
+  width: 80%;
+
+  .react-datepicker-wrapper {
+    border: 1px solid black;
+    width: auto;
+    border-radius: 5px;
+    margin-left: auto;
+  }
 }

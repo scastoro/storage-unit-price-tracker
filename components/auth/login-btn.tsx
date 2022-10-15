@@ -6,15 +6,15 @@ export default function LoginButton() {
     console.log(`Session info: ${JSON.stringify(session)}`);
     return (
       <>
-      Signed in as {session.user?.email}<br />
-      <button onClick={() => signOut()}>Sign Out</button>
+      <span className='my-auto'>Signed in as {session.user?.email}</span><br />
+      <button className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded' onClick={() => signOut()}>Sign Out</button>
       </>
     )
   }
   return (
     <>
       Not signed in <br />
-      <button onClick={() => signIn()}>Sign In</button>
+      <button className='btn btn-blue my-auto' onClick={() => signIn()}>Sign In</button>
     </>
   )
 }
