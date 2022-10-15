@@ -13,13 +13,12 @@ export default NextAuth({
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials, req) {
-        // Add logic here to look up the user from the credentials supplied
         if (credentials === undefined) {
           throw Error('Invalid Credentials.');
         }
         await dbConnect().catch(err => console.error(err));
         console.log(`creds submitted ${JSON.stringify(credentials)}`);
-        const authUser = await User.findOne({ username: credentials.username }).catch(err => console.error(err));
+        const authUser = await User.findOne().or([{ username: credentials.username }, { email: credentials.username }]).catch(err => console.error(err));
         console.log(authUser);
         const result = await bcrypt.compare(credentials.password, authUser.password);
 

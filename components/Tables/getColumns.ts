@@ -4,7 +4,7 @@ import { TableUnit } from 'types/types';
 export function getColumns(units: TableUnit[]): Column[] {
   return units.reduce((acc: Column[], curr) => {
     // Use reduce to loop through every object in units parameter array
-    Object.keys(curr).forEach((key) => {
+    Object.keys(curr)?.forEach((key) => {
       // Remove the hyphen from header, only needed in accessor b/c react table cannot handle periods in accessor
       const columnHeader = key.match(/(\d)-(\d)/) ? key.replace(/-/, '.') : key;
       // Check if object has been created in accumulator based off of the current key
