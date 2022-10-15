@@ -5,7 +5,6 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method, query } = req;
-  console.log(query);
 
   await dbConnect();
 
@@ -13,7 +12,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const parsed = parser.parse(query);
 
   const { select, populate, sort, filter, limit } = parsed;
-  console.log(parsed);
 
   let buildQuery = Unit.find();
   if (filter) {

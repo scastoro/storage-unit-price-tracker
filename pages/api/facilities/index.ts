@@ -1,11 +1,37 @@
 import dbConnect from '../../../lib/dbConnect';
 import Facility from '../../../models/Facility';
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { MongooseQueryParser } from 'mongoose-query-parser';
+import Unit from 'models/Unit';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { method } = req;
+  const { method, query } = req;
 
   await dbConnect();
+
+  const parser = new MongooseQueryParser();
+  const parsed = parser.parse(query);
+
+  const { select, populate, sort, filter, limit } = parsed;
+  console.log(parsed);
+
+  let buildQuery = Unit.find();
+  if (filter) {
+    buildQuery = Unit.find(filter);
+  }
+  if (populate) {
+    buildQuery = buildQuery.populate(populate);
+  }
+  if (select) {
+    buildQuery = buildQuery.select(select);
+  }
+  if (limit) {
+    buildQuery = buildQuery.limit(limit);
+  }
+  if (sort) {
+    buildQuery = buildQuery.sort(sort);
+  }
+
 
   switch (method) {
     case 'GET':
