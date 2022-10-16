@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Link from 'next/link';
 import { updateFacilities } from 'features/facilities/facilitiesSlice';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
-import LoginButton from './auth/login-btn';
+import LoginButton from '../auth/login-btn';
 
 function Navbar() {
   const facilities = useAppSelector((state) => state.facilities.value);

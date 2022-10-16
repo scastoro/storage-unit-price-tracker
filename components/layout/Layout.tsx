@@ -1,6 +1,6 @@
 import { useSession } from 'next-auth/react';
 import React from 'react';
-import AccessDenied from './auth/access-denied';
+import AccessDenied from '../auth/access-denied';
 import Navbar from './Navbar';
 
 interface Props {

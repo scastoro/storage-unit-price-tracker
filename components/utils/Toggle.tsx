@@ -3,7 +3,7 @@ import React from 'react'
 interface Props {
   optionSelected: (e: React.ChangeEvent<HTMLSelectElement>) => void
 }
-function Toggle({optionSelected}: Props) {
+function ViewToggle({optionSelected}: Props) {
   return (
     <select className='border border-black rounded my-auto py-1' onChange={optionSelected}>
       <option>Table</option>
@@ -12,4 +12,4 @@ function Toggle({optionSelected}: Props) {
   )
 }
 
-export default Toggle
+export default ViewToggle
