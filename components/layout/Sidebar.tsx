@@ -1,8 +1,11 @@
+import UnitSizeList from 'components/utils/UnitSizeList'
 import React from 'react'
 
 function Sidebar() {
   return (
-    <div>Sidebar</div>
+    <div>
+      <UnitSizeList />
+    </div>
   )
 }
 
