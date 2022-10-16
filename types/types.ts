@@ -19,6 +19,15 @@ export interface Unit {
   _id?: string;
 }
 
+export interface UnitSizes {
+  dimensions: {
+    length: number;
+    width: number
+  };
+  climate: boolean;
+  selected: boolean;
+}
+
 export interface FacilityHours {
   monday: string;
   tuesday: string;
