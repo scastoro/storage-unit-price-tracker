@@ -16,14 +16,16 @@ import {
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
 import { formatUnits } from 'utils/formatUnits';
-import { TableUnit, UnitFormat } from 'types/types';
+import { TableUnit, Unit, UnitFormat } from 'types/types';
 import UnitTable from 'components/Tables/UnitTable';
 import { getColumns } from 'components/Tables/getColumns';
 import { Column } from 'react-table';
 import { formatUnitsDate } from 'utils/formatUnitsDate';
 import { sub, format } from 'date-fns';
 import DatePicker from 'react-datepicker';
-import Toggle from 'components/utils/Toggle';
+import ViewToggle from 'components/utils/Toggle';
+import getUnitSizes from 'utils/getUnitSizes';
+import Sidebar from 'components/layout/Sidebar';
 
 const Facility: NextPage = () => {
   ChartJS.register(
@@ -38,8 +40,9 @@ const Facility: NextPage = () => {
   );
   const [loading, setLoading] = useState(false);
   const [date, setDate] = useState(format(sub(new Date(), { months: 4 }), 'yyyy-MM-dd'));
-  const [display, setDisplay] = useState("Table")
+  const [display, setDisplay] = useState('Table');
   const [formattedUnits, setFormattedUnits] = useState<UnitFormat[]>([]);
+  const [selectedUnits, setSelectedUnits] = useState<Unit[]>([]);
   const [tableUnits, setTableUnits] = useState<TableUnit[]>([]);
   const [unitColumns, setUnitColumns] = useState<Column[]>([]);
   const router = useRouter();
@@ -48,6 +51,7 @@ const Facility: NextPage = () => {
   const dispatch = useAppDispatch();
   const units = useAppSelector((state) => state.units.value);
   const facilities = useAppSelector((state) => state.facilities.value);
+  const unitSizes = useAppSelector((state) => state.unitSizes.value);
 
   useEffect(() => {
     setLoading(true);
@@ -57,6 +61,8 @@ const Facility: NextPage = () => {
       });
       const units = await response.json();
       dispatch(updateUnits(units.data));
+      console.log('Unformatted Units');
+      console.log(units);
     }
     if (id) {
       getUnits();
@@ -64,22 +70,48 @@ const Facility: NextPage = () => {
     }
   }, [id, dispatch, date]);
 
+  // Create new effect to allow selecting unit sizes
+  // New selected units variable will be passed to formatted units
+  // instead of just the units variable
   useEffect(() => {
-    if (units) {
-      setFormattedUnits(formatUnits(units));
-      setTableUnits(formatUnitsDate(units));
+    if (units && unitSizes) {
+      const filteredUnits = units.filter((unit) => {
+        const match = unitSizes.find((unitSize) => {
+          return (
+            unit.dimensions.length === unitSize.dimensions.length &&
+            unit.dimensions.width === unitSize.dimensions.width &&
+            unit.climate === unitSize.climate &&
+            unitSize.selected
+          );
+        });
+
+        if (match) {
+          return unit;
+        }
+      });
+      setSelectedUnits(filteredUnits);
     }
-  }, [units]);
+  }, [units, unitSizes]);
+
+  useEffect(() => {
+    if (selectedUnits) {
+      setFormattedUnits(formatUnits(selectedUnits));
+      setTableUnits(formatUnitsDate(selectedUnits));
+    }
+  }, [selectedUnits]);
 
   useEffect(() => {
     if (tableUnits.length > 0) {
       setUnitColumns(getColumns(tableUnits));
       setLoading(false);
+      console.log('Unit Columns');
+      console.log(unitColumns);
     }
   }, [tableUnits]);
 
   return (
     <>
+      <Sidebar />
       <section className='m-auto w-4/5'>
         <h1 className='text-3xl underline mb-5'>
           {facilities.find((facility) => facility._id === id)?.name}
@@ -92,12 +124,14 @@ const Facility: NextPage = () => {
               onChange={(date: Date) => setDate(format(date, 'yyyy-MM-dd'))}
             />
           </div>
-          <Toggle optionSelected={(e) => setDisplay(e.target.value)}/>
+          <ViewToggle optionSelected={(e) => setDisplay(e.target.value)} />
         </section>
         <section className='table-container mb-10'>
-          {!loading && display === "Table" ? <UnitTable units={tableUnits} tableColumns={unitColumns} /> : null}
+          {!loading && display === 'Table' ? (
+            <UnitTable units={tableUnits} tableColumns={unitColumns} />
+          ) : null}
         </section>{' '}
-        {!loading && display === "Chart" ? (
+        {!loading && display === 'Chart' ? (
           <section style={{ width: '65%', marginBottom: '30px' }} className='chart-container'>
             <Line
               options={{
@@ -114,7 +148,7 @@ const Facility: NextPage = () => {
               }}
             />
           </section>
-        ): null}
+        ) : null}
       </section>
     </>
   );

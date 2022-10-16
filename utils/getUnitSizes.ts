@@ -17,6 +17,8 @@ export default function getUnitSizes(units: Unit[]): UnitSizes[] {
         },
         climate: curr.climate,
         selected: true,
+        type: curr?.type,
+        _id: curr._id,
       });
     }
     return acc;

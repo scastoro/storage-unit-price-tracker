@@ -16,7 +16,7 @@ export interface Unit {
   facility: Types.ObjectId;
   createdAt?: string;
   updatedAt?: string;
-  _id?: string;
+  _id: string;
 }
 
 export interface UnitSizes {
@@ -26,6 +26,8 @@ export interface UnitSizes {
   };
   climate: boolean;
   selected: boolean;
+  type?: 'self storage' | 'parking' | 'RV';
+  _id: string;
 }
 
 export interface FacilityHours {
