@@ -61,12 +61,9 @@ const Facility: NextPage = () => {
       });
       const units = await response.json();
       dispatch(updateUnits(units.data));
-      console.log('Unformatted Units');
-      console.log(units);
     }
     if (id) {
       getUnits();
-      console.log(date);
     }
   }, [id, dispatch, date]);
 
@@ -104,51 +101,52 @@ const Facility: NextPage = () => {
     if (tableUnits.length > 0) {
       setUnitColumns(getColumns(tableUnits));
       setLoading(false);
-      console.log('Unit Columns');
-      console.log(unitColumns);
     }
   }, [tableUnits]);
 
   return (
     <>
-      <Sidebar />
-      <section className='m-auto w-4/5'>
-        <h1 className='text-3xl underline mb-5'>
-          {facilities.find((facility) => facility._id === id)?.name}
-        </h1>
-        <section className='datepicker-container'>
-          <div>
-            <h2>Choose start date:</h2>
-            <DatePicker
-              selected={new Date(date)}
-              onChange={(date: Date) => setDate(format(date, 'yyyy-MM-dd'))}
-            />
-          </div>
-          <ViewToggle optionSelected={(e) => setDisplay(e.target.value)} />
-        </section>
-        <section className='table-container mb-10'>
-          {!loading && display === 'Table' ? (
-            <UnitTable units={tableUnits} tableColumns={unitColumns} />
-          ) : null}
-        </section>{' '}
-        {!loading && display === 'Chart' ? (
-          <section style={{ width: '65%', marginBottom: '30px' }} className='chart-container'>
-            <Line
-              options={{
-                responsive: true,
-                scales: {
-                  y: {
-                    type: 'logarithmic',
-                    ticks: {},
-                  },
-                },
-              }}
-              data={{
-                datasets: formattedUnits,
-              }}
-            />
+      <section className='m-auto w-11/12 flex'>
+        <Sidebar>
+          <section className='datepicker-container flex-col'>
+            <div>
+              <h2>Choose start date:</h2>
+              <DatePicker
+                selected={new Date(date)}
+                onChange={(date: Date) => setDate(format(date, 'yyyy-MM-dd'))}
+              />
+            </div>
+            <ViewToggle optionSelected={(e) => setDisplay(e.target.value)} />
           </section>
+        </Sidebar>
+        <section className='flex-1'>
+          <h1 className='text-3xl underline mb-5'>
+            {facilities.find((facility) => facility._id === id)?.name}
+          </h1>
+          <section className='table-container mb-10'>
+            {!loading && display === 'Table' ? (
+              <UnitTable units={tableUnits} tableColumns={unitColumns} />
+            ) : null}
+          </section>{' '}
+          {!loading && display === 'Chart' ? (
+            <section style={{ width: '65%', marginBottom: '30px' }} className='chart-container'>
+              <Line
+                options={{
+                  responsive: true,
+                  scales: {
+                    y: {
+                      type: 'logarithmic',
+                      ticks: {},
+                    },
+                  },
+                }}
+                data={{
+                  datasets: formattedUnits,
+                }}
+              />
+            </section>
         ) : null}
+        </section>
       </section>
     </>
   );

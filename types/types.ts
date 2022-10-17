@@ -70,3 +70,7 @@ export interface TableUnit {
   climate?: boolean;
   [key: string]: number | string | boolean | undefined;
 }
+
+export interface ChildrenProps {
+  children: JSX.Element | JSX.Element[];
+}

@@ -1,13 +1,10 @@
 import { useSession } from 'next-auth/react';
 import React from 'react';
+import { ChildrenProps } from 'types/types';
 import AccessDenied from '../auth/access-denied';
 import Navbar from './Navbar';
 
-interface Props {
-  children: JSX.Element | JSX.Element[];
-}
-
-function Layout({ children }: Props) {
+function Layout({ children }: ChildrenProps) {
   const {data: session, status } = useSession();
 
   if (!session) {

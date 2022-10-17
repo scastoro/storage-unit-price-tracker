@@ -14,25 +14,34 @@ function UnitSizeList() {
   }, [units, dispatch]);
 
   const handleChange = (unit: UnitSizes): undefined => {
-    dispatch(toggleUnit(unit))
+    dispatch(toggleUnit(unit));
     return;
-  }
-  const unitSizeList = unitSizes.length > 0 ? unitSizes.map((unit, index) => {
-    return (
-      <>
-        <li key={index}>
-          {unit.dimensions.length}x{unit.dimensions.width}{' '}
-          {unit?.type === 'parking' ? 'parking' : unit.climate ? 'climate' : 'non-climate'}
-          <input type="checkbox" name="" id="" checked={unit.selected} onChange={() => handleChange(unit)}  />
-        </li>
-      </>
-    );
-  }) : null;
+  };
+  const unitSizeList =
+    unitSizes.length > 0
+      ? unitSizes.map((unit, index) => {
+          return (
+            <>
+              <li key={index}>
+                <input
+                  type='checkbox'
+                  className='mr-1'
+                  checked={unit.selected}
+                  onChange={() => handleChange(unit)}
+                />
+                {unit.dimensions.length}x{unit.dimensions.width}{' '}
+                {unit?.type === 'parking' ? 'parking' : unit.climate ? 'climate' : 'non-climate'}
+              </li>
+            </>
+          );
+        })
+      : null;
 
   return (
-    <ul>
-      {unitSizes.length > 0 && unitSizeList}
-    </ul>
+    <>
+      <h3>Choose Units</h3>
+      <ul>{unitSizes.length > 0 && unitSizeList}</ul>
+    </>
   );
 }
 
