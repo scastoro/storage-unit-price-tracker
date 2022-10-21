@@ -3,9 +3,10 @@ import { UnitFormat, Unit } from 'types/types';
 
 export const formatUnits = (units: Unit[]) => {
   const colorSchemeCopy = [...colorScheme];
-  units.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
+  const unitsCopy = [...units]
+  unitsCopy.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
 
-  const formatted: UnitFormat[] = units.reduce((acc: UnitFormat[], curr) => {
+  const formatted: UnitFormat[] = unitsCopy.reduce((acc: UnitFormat[], curr) => {
     if (
       !acc.find(
         (item: UnitFormat) =>

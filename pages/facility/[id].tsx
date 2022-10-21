@@ -24,7 +24,6 @@ import { formatUnitsDate } from 'utils/formatUnitsDate';
 import { sub, format } from 'date-fns';
 import DatePicker from 'react-datepicker';
 import ViewToggle from 'components/utils/Toggle';
-import getUnitSizes from 'utils/getUnitSizes';
 import Sidebar from 'components/layout/Sidebar';
 
 const Facility: NextPage = () => {
