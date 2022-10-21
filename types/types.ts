@@ -14,7 +14,7 @@ export interface Unit {
   size?: 'small' | 'medium' | 'large' | 'extra large';
   amount_left?: string;
   facility: Types.ObjectId;
-  createdAt?: string;
+  createdAt: string;
   updatedAt?: string;
   _id: string;
 }

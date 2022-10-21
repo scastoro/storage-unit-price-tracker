@@ -3,6 +3,7 @@ import { UnitFormat, Unit } from 'types/types';
 
 export const formatUnits = (units: Unit[]) => {
   const colorSchemeCopy = [...colorScheme];
+  units.sort((a, b) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime())
 
   const formatted: UnitFormat[] = units.reduce((acc: UnitFormat[], curr) => {
     if (
@@ -20,7 +21,7 @@ export const formatUnits = (units: Unit[]) => {
         }`,
         data: [
           {
-            x: curr.createdAt?.split('T')?.[0],
+            x: curr.createdAt?.split('T')?.[0] ?? '',
             y: curr.price,
           },
         ],
@@ -47,5 +48,6 @@ export const formatUnits = (units: Unit[]) => {
     }
     return acc;
   }, []);
+  console.log(formatted);
   return formatted;
 };
