@@ -7,7 +7,7 @@ export default function getUnitSizes(units: Unit[]): UnitSizes[] {
         (unit) =>
           unit.dimensions.length === curr.dimensions.length &&
           unit.dimensions.width === curr.dimensions.width &&
-          unit.climate === unit.climate
+          unit.climate === curr.climate
       )
     ) {
       acc.push({
