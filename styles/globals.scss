@@ -3,6 +3,11 @@
 @tailwind utilities;
 @import 'react-datepicker/dist/react-datepicker.css';
 
+tr > th:first-child,
+tr > td:first-child {
+  width: 120px;
+}
+
 tr:nth-child(even) {
   background-color: #ccc;
 }
