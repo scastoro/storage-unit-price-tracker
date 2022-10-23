@@ -22,11 +22,33 @@ export const unitSizesSlice = createSlice({
       if (unit) {
         unit.selected = !unit.selected;
       }
-    }
+    },
+    toggleParking: (state) => {
+      state.value.forEach((unit) => {
+        if (unit.type === 'parking') {
+          unit.selected = !unit.selected;
+        }
+      });
+    },
+    toggleClimate: (state) => {
+      state.value.forEach((unit) => {
+        if (unit.climate) {
+          unit.selected = !unit.selected;
+        }
+      });
+    },
+    toggleNonClimate: (state) => {
+      state.value.forEach((unit) => {
+        if (!unit.climate && unit.type !== 'parking') {
+          unit.selected = !unit.selected;
+        }
+      });
+    },
   },
 });
 
-export const { updateUnitSizes, toggleUnit } = unitSizesSlice.actions;
+export const { updateUnitSizes, toggleUnit, toggleParking, toggleClimate, toggleNonClimate } =
+  unitSizesSlice.actions;
 
 export const selectUnitSizes = (state: RootState) => state.unitSizes.value;
 
