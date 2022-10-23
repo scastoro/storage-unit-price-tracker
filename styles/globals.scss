@@ -36,8 +36,12 @@ a {
 
   .react-datepicker-wrapper {
     border: 1px solid black;
-    width: auto;
     border-radius: 5px;
     margin-left: auto;
+  }
+
+  input,
+  .react-datepicker-ignore-onclickoutside {
+    width: 100%;
   }
 }
