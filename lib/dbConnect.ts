@@ -31,7 +31,13 @@ async function dbConnect() {
       return mongoose;
     }).catch(err => console.error(err));
   }
-  cached.conn = await cached.promise;
+  try {
+    cached.conn = await cached.promise;
+  } catch (e) {
+    cached.promise = null;
+    console.error(e);
+    throw e
+  }
   // console.dir(cached.conn.connection.getClient());
   return cached.conn;
 }

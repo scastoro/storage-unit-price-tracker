@@ -7,7 +7,7 @@ import Unit from 'models/Unit';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method, query } = req;
 
-  await dbConnect();
+  dbConnect();
 
   const parser = new MongooseQueryParser();
   const parsed = parser.parse(query);
@@ -15,9 +15,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { select, populate, sort, filter, limit } = parsed;
   console.log(parsed);
 
-  let buildQuery = Unit.find();
+  let buildQuery = Facility.find();
   if (filter) {
-    buildQuery = Unit.find(filter);
+    buildQuery = Facility.find(filter);
   }
   if (populate) {
     buildQuery = buildQuery.populate(populate);
