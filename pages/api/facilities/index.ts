@@ -33,7 +33,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       buildQuery = buildQuery.sort(sort);
     }
   } catch (error) {
-    console.error(error);
+    console.log(error);
   }
 
   switch (method) {
@@ -43,7 +43,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         res.status(200).json({ success: true, data: facilities });
       } catch (error) {
         const typedError = error as Error;
-        console.error(error);
+        console.log(error);
         res.status(400).json({ success: false, data: typedError?.message});
       }
       break;
