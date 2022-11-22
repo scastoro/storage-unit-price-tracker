@@ -7,7 +7,7 @@ import Unit from 'models/Unit';
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method, query } = req;
 
-  dbConnect();
+  await dbConnect();
 
   const parser = new MongooseQueryParser();
   const parsed = parser.parse(query);
