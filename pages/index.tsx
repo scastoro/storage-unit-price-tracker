@@ -36,7 +36,7 @@ const Home: NextPage = () => {
           `
         )}{' '}
       </p>
-      {!loading && <UnitTable units={units} tableColumns={COLUMNS} />}
+      {units && <UnitTable units={units} tableColumns={COLUMNS} />}
       {facilities.length > 0 && <FacilityInfo facility={facilities[0]} />}
     </section>
   );

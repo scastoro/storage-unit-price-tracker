@@ -1,5 +1,6 @@
 import mongoose, { Schema, Types } from 'mongoose';
 import { Unit } from 'types/types';
+import Facility from './Facility';
 
 const UnitSchema = new Schema<Unit>(
   {
@@ -37,7 +38,7 @@ const UnitSchema = new Schema<Unit>(
     },
     facility: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Facility',
+      ref: Facility.modelName,
       required: [true, 'Unit must have an associated Facility.'],
     },
   },
