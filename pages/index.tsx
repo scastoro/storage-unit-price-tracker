@@ -31,7 +31,7 @@ const Home: NextPage = () => {
       <h1 className='underline'>Storage Unit Price Tracking</h1>
       <p style={{ height: '100px' }}>
         Unit sizes:{' '}
-        {units.length > 0 && units?.map(
+        {units && units?.map(
           (item) => `${item.dimensions.width}x${item.dimensions.width} 
           `
         )}{' '}

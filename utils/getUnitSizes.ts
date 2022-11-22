@@ -1,7 +1,7 @@
 import { Unit, UnitSizes } from 'types/types';
 
 export default function getUnitSizes(units: Unit[]): UnitSizes[] {
-  return units.reduce((acc: UnitSizes[], curr) => {
+  return units?.reduce((acc: UnitSizes[], curr) => {
     if (
       !acc.find(
         (unit) =>

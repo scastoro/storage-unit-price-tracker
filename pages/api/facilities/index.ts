@@ -39,17 +39,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         const facilities = await Facility.find({});
         res.status(200).json({ success: true, data: facilities });
       } catch (error) {
+        console.error(error);
         res.status(400).json({ success: false });
       }
       break;
-    case 'POST':
-      try {
-        const facilities = await Facility.create(req.body);
-        res.status(201).json({ success: true, data: facilities });
-      } catch (error) {
-        res.status(400).json({ success: false });
-      }
-      break;
+    // case 'POST':
+    //   try {
+    //     const facilities = await Facility.create(req.body);
+    //     res.status(201).json({ success: true, data: facilities });
+    //   } catch (error) {
+    //     res.status(400).json({ success: false });
+    //   }
+    //   break;
     default:
       res.status(400).json({ success: false });
       break;
