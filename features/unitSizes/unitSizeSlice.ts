@@ -23,32 +23,75 @@ export const unitSizesSlice = createSlice({
         unit.selected = !unit.selected;
       }
     },
-    toggleParking: (state) => {
+    selectUnit: (state, action: PayloadAction<UnitSizes>) => {
+      const unit = state.value.find((unit: UnitSizes) => unit._id === action.payload._id);
+      if (unit) {
+        unit.selected = true;
+      }
+    },
+    deSelectUnit: (state, action: PayloadAction<UnitSizes>) => {
+      const unit = state.value.find((unit: UnitSizes) => unit._id === action.payload._id);
+      if (unit) {
+        unit.selected = false;
+      }
+    },
+    selectParking: (state) => {
       state.value.forEach((unit) => {
         if (unit.type === 'parking') {
-          unit.selected = !unit.selected;
+          unit.selected = true;
         }
       });
     },
-    toggleClimate: (state) => {
+    deSelectParking: (state) => {
+      state.value.forEach((unit) => {
+        if (unit.type === 'parking') {
+          unit.selected = false;
+        }
+      });
+    },
+    selectClimate: (state) => {
       state.value.forEach((unit) => {
         if (unit.climate) {
-          unit.selected = !unit.selected;
+          unit.selected = true;
         }
       });
     },
-    toggleNonClimate: (state) => {
+    deSelectClimate: (state) => {
+      state.value.forEach((unit) => {
+        if (unit.climate) {
+          unit.selected = false;
+        }
+      });
+    },
+    selectNonClimate: (state) => {
       state.value.forEach((unit) => {
         if (!unit.climate && unit.type !== 'parking') {
-          unit.selected = !unit.selected;
+          unit.selected = true;
+        }
+      });
+    },
+    deSelectNonClimate: (state) => {
+      state.value.forEach((unit) => {
+        if (!unit.climate && unit.type !== 'parking') {
+          unit.selected = false;
         }
       });
     },
   },
 });
 
-export const { updateUnitSizes, toggleUnit, toggleParking, toggleClimate, toggleNonClimate } =
-  unitSizesSlice.actions;
+export const {
+  updateUnitSizes,
+  toggleUnit,
+  selectUnit,
+  deSelectUnit,
+  selectParking,
+  deSelectParking,
+  selectClimate,
+  deSelectClimate,
+  selectNonClimate,
+  deSelectNonClimate,
+} = unitSizesSlice.actions;
 
 export const selectUnitSizes = (state: RootState) => state.unitSizes.value;
 

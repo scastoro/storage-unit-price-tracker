@@ -1,10 +1,13 @@
 import { useAppDispatch, useAppSelector } from 'app/hooks';
 import {
-  updateUnitSizes,
+  deSelectClimate,
+  deSelectNonClimate,
+  deSelectParking,
+  selectClimate,
+  selectNonClimate,
+  selectParking,
   toggleUnit,
-  toggleClimate,
-  toggleNonClimate,
-  toggleParking,
+  updateUnitSizes,
 } from 'features/unitSizes/unitSizeSlice';
 import React, { useEffect, useState } from 'react';
 import { UnitSizes } from 'types/types';
@@ -13,7 +16,7 @@ import getUnitSizes from 'utils/getUnitSizes';
 function UnitSizeList() {
   const units = useAppSelector((state) => state.units.value);
   const unitSizes = useAppSelector((state) => state.unitSizes.value);
-  const [parking, setParking] = useState(true);
+  const [parking, setParking] = useState(false);
   const [climate, setClimate] = useState(true);
   const [nonClimate, setNonClimate] = useState(true);
   const dispatch = useAppDispatch();
@@ -22,24 +25,44 @@ function UnitSizeList() {
     dispatch(updateUnitSizes(getUnitSizes(units)));
   }, [units, dispatch]);
 
-  const handleChange = (unit: UnitSizes): undefined => {
+  useEffect(() => {
+    if (parking) {
+      dispatch(selectParking());
+    } else {
+      dispatch(deSelectParking())
+    }
+  }, [parking, units, dispatch])
+
+  useEffect(() => {
+    if (climate) {
+      dispatch(selectClimate());
+    } else {
+      dispatch(deSelectClimate())
+    }
+  }, [climate, units, dispatch])
+
+  useEffect(() => {
+    if (nonClimate) {
+      dispatch(selectNonClimate());
+    } else {
+      dispatch(deSelectNonClimate())
+    }
+  }, [nonClimate, units, dispatch])
+
+  const handleChange = (unit: UnitSizes) => {
     dispatch(toggleUnit(unit));
-    return;
   };
 
   const handleParking = () => {
     setParking(state => !state);
-    dispatch(toggleParking());
   }
 
   const handleClimate = () => {
     setClimate(state => !state);
-    dispatch(toggleClimate());
   }
 
   const handleNonClimate = () => {
     setNonClimate(state => !state);
-    dispatch(toggleNonClimate());
   }
 
   const unitSizeList =
