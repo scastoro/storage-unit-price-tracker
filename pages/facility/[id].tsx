@@ -118,7 +118,7 @@ const Facility: NextPage = () => {
             <ViewToggle optionSelected={(e) => setDisplay(e.target.value)} />
           </section>
         </Sidebar>
-        <section className='flex-1'>
+        <section className='w-10/12 overflow-x-auto'>
           <h1 className='text-3xl underline mb-5'>
             {facilities.find((facility) => facility._id === id)?.name}
           </h1>

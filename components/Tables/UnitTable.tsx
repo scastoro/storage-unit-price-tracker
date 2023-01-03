@@ -46,14 +46,14 @@ function UnitTable({ units, tableColumns }: Props) {
 
   return (
     <>
-      <table className='border' {...getTableProps()}>
+      <table className='table table-compact table-zebra table-fixed w-full' {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup, index) => (
             // eslint-disable-next-line react/jsx-key
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
                 // eslint-disable-next-line react/jsx-key
-                <th className='border border-slate-600 text-sm' {...column.getHeaderProps()}>
+                <th className='border border-slate-600 text-sm p-1 break-words whitespace-pre-wrap text-center' {...column.getHeaderProps()}>
                   {column.render('Header')}
                 </th>
               ))}
@@ -65,11 +65,11 @@ function UnitTable({ units, tableColumns }: Props) {
             prepareRow(row);
             return (
               // eslint-disable-next-line react/jsx-key
-              <tr className='border' {...row.getRowProps()}>
+              <tr className='' {...row.getRowProps()}>
                 {row.cells.map((cell) => {
                   return (
                     // eslint-disable-next-line react/jsx-key
-                    <td className='border text-center' {...cell.getCellProps()}>
+                    <td className=' text-center p-1' {...cell.getCellProps()}>
                       {cell.render('Cell')}
                     </td>
                   );
