@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { updateFacilities } from 'features/facilities/facilitiesSlice';
 import { useAppDispatch, useAppSelector } from 'app/hooks';
@@ -7,6 +7,8 @@ import LoginButton from '../auth/login-btn';
 function Navbar() {
   const facilities = useAppSelector((state) => state.facilities.value);
   const dispatch = useAppDispatch();
+
+  const [darkMode, setDarkMode] = useState<boolean>();
 
   // TODO: Explore using getServerSideProps instead of client side data fetching.
   useEffect(() => {
@@ -20,6 +22,25 @@ function Navbar() {
     }
     getFacilities();
   }, [dispatch]);
+
+  useEffect(() => {
+    const theme = localStorage.getItem('theme');
+    if (theme === 'light') {
+      setDarkMode(false);
+    } else {
+      setDarkMode(true);
+    }
+  }, [])
+
+  useEffect(() => {
+    if (darkMode) {
+      document.querySelector('html')?.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.querySelector('html')?.setAttribute('data-theme', 'light');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [darkMode]);
 
   return (
     <nav className='m-auto my-5 w-4/5'>
@@ -38,6 +59,12 @@ function Navbar() {
           </li>
         ))}
         <LoginButton />
+        { darkMode !== undefined && <div className="form-control">
+          <label className="label cursor-pointer" >
+            <span className="label-text mr-2">{!darkMode ? "Dark" : "Light"} mode</span> 
+            <input type="checkbox" className="toggle" checked={darkMode} onChange={() => setDarkMode(state => !state)} />
+          </label>
+        </div>}
       </ul>
     </nav>
   );
